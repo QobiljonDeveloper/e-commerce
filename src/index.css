@@ -3,15 +3,17 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --color-py: #F3F5F7;
-  --color-laylo: #f00;
+  --color-py: #f3f5f7;
+  --color-sy: ##141718;
+  --color-text-sy: #6e7275;
+  --color-text-sy: #fefefe;
 }
-.container{
-    max-width: 1120px;
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 12px;
-    padding-right: 12px;
-    box-sizing: content-box;
+.container {
+  max-width: 1120px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 12px;
+  padding-right: 12px;
+  box-sizing: content-box;
 }
