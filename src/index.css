@@ -5,8 +5,8 @@
 @theme {
   --color-py: #f3f5f7;
   --color-sy: #141718;
+  --color-text-py: #fefefe;
   --color-text-sy: #6e7275;
-  --color-text-sy: #fefefe;
 }
 .container {
   max-width: 1120px;
@@ -16,4 +16,28 @@
   padding-left: 12px;
   padding-right: 12px;
   box-sizing: content-box;
+}
+
+.custom-prev.swiper-button-disabled,
+.custom-next.swiper-button-disabled {
+  background-color: #e5e7eb;
+  cursor: not-allowed;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.custom-pagination .swiper-pagination-bullet {
+  background: var(--color-text-py);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  opacity: 0.6;
+  transition: all 0.3s ease;
+}
+
+.custom-pagination .swiper-pagination-bullet-active {
+  width: 28px;
+  border-radius: 9999px;
+  opacity: 1;
+  background: var(--color-text-py);
 }

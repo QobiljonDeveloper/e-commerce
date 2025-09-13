@@ -1,14 +1,19 @@
-import { memo } from 'react';
-import { useFetch } from '../../hooks/useFetch';
-import ProductView from '../../components/product-view/ProductView';
-
+import { memo } from "react";
+import { useFetch } from "../../hooks/useFetch";
+import ProductView from "../../components/product-view/ProductView";
+import MySwiper from "./components/MySwiper/MySwiper";
+import SimplyBetter from "./components/SimplyBetter/SimplyBetter";
+import CategoryTypes from "./components/CategoryTypes/CategoryTypes";
 const Home = () => {
-  const {data} = useFetch("/products", {limit: 4})
-  
+  const { data } = useFetch("/products", { limit: 4 });
+
   return (
     <div className="container">
       <h2>Home</h2>
-      <ProductView data={data?.products}/>  
+      <MySwiper />
+      <SimplyBetter />
+      <CategoryTypes />
+      <ProductView data={data?.products} />
     </div>
   );
 };
