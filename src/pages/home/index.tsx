@@ -6,7 +6,7 @@ const Home = () => {
   const {data} = useFetch("/products", {limit: 4})
   
   return (
-    <div className="container">
+    <div className="container">      
       <h2>Home</h2>
       <ProductView data={data?.products}/>  
     </div>
