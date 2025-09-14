@@ -1,10 +1,8 @@
 import { memo, useState } from "react";
 import { FaStar, FaRegStar, FaStarHalfAlt, FaHeart } from "react-icons/fa";
-import Title from "../title";
 import { CiHeart } from "react-icons/ci";
 import { Link } from "react-router-dom";
-import { useFetch } from "../../hooks/useFetch";
-import { Atom } from "react-loading-indicators";
+import Title from "../title";
 
 interface IData {
   id: number;
@@ -15,28 +13,13 @@ interface IData {
   discountPercentage: number;
 }
 
-const ProductView = () => {
+interface ProductViewProps {
+  data: IData[];
+}
+
+const ProductView = ({ data }: ProductViewProps) => {
   const [liked, setLiked] = useState(false);
-  const { data, error, loading } = useFetch("/products", { limit: 4 });
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <Atom color="#3155cc" size="large" text="" textColor="" />
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <p className="text-2xl font-semibold text-red-600 bg-red-100 px-6 py-3 rounded-lg">
-          Error: {error.message}
-        </p>
-      </div>
-    );
-  }
-  const products: IData[] = data?.products ?? [];
   return (
     <div className="w-full py-12">
       <div className="mb-12">
@@ -44,7 +27,7 @@ const ProductView = () => {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 place-items-center">
-        {products?.map((item) => {
+        {data?.map((item) => {
           const discountedPrice = Math.round(
             item.price * (1 - item.discountPercentage / 100)
           );
