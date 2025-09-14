@@ -1,4 +1,4 @@
-import { memo, type FC, useState } from "react";
+import { memo, useState } from "react";
 import { FaStar, FaRegStar, FaStarHalfAlt, FaHeart } from "react-icons/fa";
 import Title from "../title";
 import { CiHeart } from "react-icons/ci";
