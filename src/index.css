@@ -13,9 +13,7 @@
   width: 100%;
   margin-left: auto;
   margin-right: auto;
-  padding-left: 12px;
-  padding-right: 12px;
-  box-sizing: content-box;
+  box-sizing: border-box;
 }
 
 .custom-prev.swiper-button-disabled,
@@ -40,4 +38,11 @@
   border-radius: 9999px;
   opacity: 1;
   background: var(--color-text-py);
+}
+
+.swiper-horizontal > .swiper-pagination-bullets,
+.swiper-pagination-bullets.swiper-pagination-horizontal {
+  left: 50% !important;
+  right: auto !important;
+  width: auto !important;
 }

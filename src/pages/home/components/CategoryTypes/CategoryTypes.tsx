@@ -6,8 +6,8 @@ import { Link } from "react-router-dom";
 
 const CategoryTypes = () => {
   return (
-    <section className="container mx-auto py-10">
-      <div className="grid grid-cols-2 gap-4">
+    <section className="container mx-auto py-10 px-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="row-span-2 relative rounded-lg overflow-hidden">
           <img
             src={chair}
@@ -21,8 +21,8 @@ const CategoryTypes = () => {
             <Link
               to={"/"}
               className="relative inline-block text-sy mt-2 font-medium cursor-pointer 
-             after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-[2px] 
-             after:bg-sy after:w-0 after:transition-all after:duration-500 hover:after:w-full"
+        after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-[2px] 
+        after:bg-sy after:w-0 after:transition-all after:duration-500 hover:after:w-full"
             >
               Shop Now →
             </Link>
@@ -40,8 +40,8 @@ const CategoryTypes = () => {
             <Link
               to={"/"}
               className="relative inline-block text-sy mt-2 font-medium cursor-pointer 
-             after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-[2px] 
-             after:bg-sy after:w-0 after:transition-all after:duration-500 hover:after:w-full"
+        after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-[2px] 
+        after:bg-sy after:w-0 after:transition-all after:duration-500 hover:after:w-full"
             >
               Shop Now →
             </Link>
@@ -61,8 +61,8 @@ const CategoryTypes = () => {
             <Link
               to={"/"}
               className="relative inline-block text-sy mt-2 font-medium cursor-pointer 
-             after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-[2px] 
-             after:bg-sy after:w-0 after:transition-all after:duration-500 hover:after:w-full"
+        after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-[2px] 
+        after:bg-sy after:w-0 after:transition-all after:duration-500 hover:after:w-full"
             >
               Shop Now →
             </Link>
