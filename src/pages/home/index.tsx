@@ -11,7 +11,7 @@ const Home = () => {
       <MySwiper />
       <SimplyBetter />
       <CategoryTypes />
-
+{/* Comment */}
       <Services />
     </div>
   );
