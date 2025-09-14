@@ -8,12 +8,8 @@ const Header = () => {
   return (
     <section className="h-auto md:h-[60px] border-b border-gray-200">
       <div className="container mx-auto h-full px-4">
-        {/* Top bar */}
-        <div className="h-full flex flex-row justify-between items-center py-2 md:py-0">
-          {/* Logo */}
+        <div className="h-full flex flex-row justify-between items-center py-2 md:py-0">          
           <img src={logo} alt="Logo" className="w-[100px] md:w-auto" />
-
-          {/* Desktop Nav */}
           <ul className="hidden md:flex gap-6 text-[#6C7275] text-sm md:text-base">
             <li>
               <NavLink
@@ -65,9 +61,9 @@ const Header = () => {
             </li>
           </ul>
 
-          {/* Desktop Icons */}
+
           <div className="hidden md:flex items-center gap-3">
-            {/* Search */}
+  
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="22"
@@ -83,8 +79,6 @@ const Header = () => {
               <path d="m21 21-4.34-4.34" />
               <circle cx="11" cy="11" r="8" />
             </svg>
-
-            {/* Account */}
             <NavLink to="/account">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -103,8 +97,6 @@ const Header = () => {
                 <circle cx="12" cy="12" r="10" />
               </svg>
             </NavLink>
-
-            {/* Cart */}
             <div className="flex items-center gap-1">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -127,14 +119,12 @@ const Header = () => {
             </div>
           </div>
 
-          {/* Hamburger (mobile only) */}
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="md:hidden"
             aria-label="Toggle menu"
           >
             {isOpen ? (
-              // X (close icon)
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="28"
@@ -151,7 +141,6 @@ const Header = () => {
                 <line x1="6" y1="6" x2="18" y2="18" />
               </svg>
             ) : (
-              // Hamburger icon
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="28"
@@ -171,8 +160,6 @@ const Header = () => {
             )}
           </button>
         </div>
-
-        {/* Mobile Menu (dropdown) */}
         {isOpen && (
           <div className="md:hidden flex flex-col gap-4 mt-4 text-sm text-[#6C7275]">
             <NavLink
@@ -203,10 +190,7 @@ const Header = () => {
             >
               Contact Us
             </NavLink>
-
-            {/* Icons ham pastda chiqadi */}
             <div className="flex gap-4 mt-2">
-              {/* Search */}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="22"
@@ -222,8 +206,6 @@ const Header = () => {
                 <path d="m21 21-4.34-4.34" />
                 <circle cx="11" cy="11" r="8" />
               </svg>
-
-              {/* Account */}
               <NavLink to="/account" onClick={() => setIsOpen(false)}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -242,8 +224,6 @@ const Header = () => {
                   <circle cx="12" cy="12" r="10" />
                 </svg>
               </NavLink>
-
-              {/* Cart */}
               <div className="flex items-center gap-1">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
