@@ -4,6 +4,7 @@ import ProductView from "../../components/product-view/ProductView";
 import MySwiper from "./components/MySwiper/MySwiper";
 import SimplyBetter from "./components/SimplyBetter/SimplyBetter";
 import CategoryTypes from "./components/CategoryTypes/CategoryTypes";
+import Services from "./components/Services/Services";
 const Home = () => {
   const { data } = useFetch("/products", { limit: 4 });
 
@@ -13,7 +14,9 @@ const Home = () => {
       <MySwiper />
       <SimplyBetter />
       <CategoryTypes />
+
       <ProductView data={data?.products} />
+      <Services />
     </div>
   );
 };
