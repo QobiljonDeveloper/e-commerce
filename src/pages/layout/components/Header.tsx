@@ -13,7 +13,7 @@ const Header = () => {
           <ul className="hidden md:flex gap-6 text-[#6C7275] text-sm md:text-base">
             <li>
               <NavLink
-                to="/home"
+                to="/"
                 className={({ isActive }) =>
                   isActive
                     ? "font-semibold text-black underline"
