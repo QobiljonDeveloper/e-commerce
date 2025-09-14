@@ -26,7 +26,7 @@ const ProductView = ({ data }: ProductViewProps) => {
         <Title text="New Arrivals" link="products" />
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-14 place-items-center">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-14 place-items-center ">
         {data?.map((item) => {
           const discountedPrice = Math.round(
             item.price * (1 - item.discountPercentage / 100)
@@ -42,13 +42,13 @@ const ProductView = ({ data }: ProductViewProps) => {
             <Link
               to={`/products/${item.id}`}
               key={item.id}
-              className="group w-[262px] h-[433px] transition overflow-hidden flex flex-col gap-3"
+              className="group w-[262px] h-[433px] transition overflow-hidden flex flex-col gap-3 "
             >
-              <div className="w-[262px] h-[349px] relative overflow-hidden">
+              <div className="w-[262px] h-[349px] relative overflow-hidden bg-py">
                 <img
                   src={item.thumbnail}
                   alt={item.title}
-                  className="w-full h-full object-cover shadow-md border"
+                  className="w-full h-full object-cover shadow-md"
                 />
 
                 <div className="absolute top-4 left-4 flex flex-col gap-2">
