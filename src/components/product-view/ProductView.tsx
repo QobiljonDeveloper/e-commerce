@@ -21,12 +21,12 @@ const ProductView = ({ data }: ProductViewProps) => {
   const [liked, setLiked] = useState(false);
 
   return (
-    <div className="w-full py-12">
+    <div className="container w-full py-12 px-8">
       <div className="mb-12">
         <Title text="New Arrivals" link="products" />
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 place-items-center">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-14 place-items-center">
         {data?.map((item) => {
           const discountedPrice = Math.round(
             item.price * (1 - item.discountPercentage / 100)
@@ -71,7 +71,13 @@ const ProductView = ({ data }: ProductViewProps) => {
                   {liked ? <FaHeart /> : <CiHeart />}
                 </div>
 
-                <div className="absolute bottom-4 left-0 w-full px-4 opacity-0 group-hover:opacity-100 transition">
+                <div
+                  className="
+    absolute bottom-4 left-0 w-full px-4 
+    opacity-100 lg:opacity-0 lg:group-hover:opacity-100 
+    transition
+  "
+                >
                   <button
                     className="w-full bg-sy text-center py-2 text-white rounded-[8px] select-none"
                     onClick={(e) => {

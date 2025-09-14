@@ -19,7 +19,7 @@ const Home = () => {
       <MySwiper />
       <SimplyBetter />
       <CategoryTypes />
-      <ProductView data={data.products} />
+      {data && <ProductView data={data.products} />}
       <ArticlesView />
       <Services />
       <JoinUs />

@@ -17,7 +17,7 @@ const AppRouter = () => {
           path: "/",
           element: <MainLayout />,
           children: [
-            { path: "home", element: <Home /> },
+            { path: "/", element: <Home /> },
             { path: "shop", element: <Shop /> },
           ],
         },
