@@ -16,13 +16,11 @@ const Home = () => {
 
   return (
     <div className="">
-      {data && <ProductView data={data.products} />}
-
-      <ArticlesView />
-
       <MySwiper />
       <SimplyBetter />
       <CategoryTypes />
+      <ProductView data={data.products} />
+      <ArticlesView />
       <Services />
       <JoinUs />
     </div>
