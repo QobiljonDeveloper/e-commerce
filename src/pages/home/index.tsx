@@ -1,12 +1,9 @@
 import { memo } from "react";
-import { useFetch } from "../../hooks/useFetch";
-import ProductView from "../../components/product-view/ProductView";
 import MySwiper from "./components/MySwiper/MySwiper";
 import SimplyBetter from "./components/SimplyBetter/SimplyBetter";
 import CategoryTypes from "./components/CategoryTypes/CategoryTypes";
 import Services from "./components/Services/Services";
 const Home = () => {
-  const { data } = useFetch("/products", { limit: 4 });
 
   return (
     <div className="container">
@@ -15,7 +12,6 @@ const Home = () => {
       <SimplyBetter />
       <CategoryTypes />
 
-      <ProductView data={data?.products} />
       <Services />
     </div>
   );
