@@ -6,9 +6,9 @@ const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <section className="h-auto md:h-[60px] border-b border-gray-200">
+    <section className="h-auto md:h-[60px] ">
       <div className="container mx-auto h-full px-4">
-        <div className="h-full flex flex-row justify-between items-center py-2 md:py-0">          
+        <div className="h-full flex flex-row justify-between items-center py-2 md:py-0">
           <img src={logo} alt="Logo" className="w-[100px] md:w-auto" />
           <ul className="hidden md:flex gap-6 text-[#6C7275] text-sm md:text-base">
             <li>
@@ -61,9 +61,7 @@ const Header = () => {
             </li>
           </ul>
 
-
           <div className="hidden md:flex items-center gap-3">
-  
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="22"
