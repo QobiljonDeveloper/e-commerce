@@ -4,6 +4,7 @@ const Cart = () => {
   return (
     <div className="Index">
       <h2>Cart</h2>
+      {/* asdf */}
     </div>
   );
 };
