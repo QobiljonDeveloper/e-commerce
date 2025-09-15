@@ -1,11 +1,9 @@
 import { memo } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import { FaStar, FaRegStar, FaStarHalfAlt, FaHeart } from "react-icons/fa";
-import { CiHeart } from "react-icons/ci";
-import { Link } from "react-router-dom";
-import { Atom } from "react-loading-indicators";
-import Title from "../title";
-import { useDispatch, useSelector } from "react-redux";
 import { toggleLike } from "../../lib/features/wishlistSlice";
+import wishlishEmpty from "../../assets/wishlistempty.webp";
 
 interface IData {
   id: number;
@@ -16,40 +14,40 @@ interface IData {
   discountPercentage: number;
 }
 
-interface ProductViewProps {
-  data: IData[];
-  error: Error | null;
-  loading: boolean;
-}
-
-const ProductView = ({ data, error, loading }: ProductViewProps) => {
+const WishlistView = () => {
   const wishlist = useSelector((state: any) => state.wishlist.value);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  if (loading)
+  if (!wishlist.length) {
     return (
-      <div className="flex items-center justify-center h-433">
-        <Atom color="#111" size="large" text="" textColor="" />
-      </div>
-    );
-
-  if (error)
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <p className="text-2xl font-semibold text-red-600 bg-red-100 px-6 py-3 rounded-lg">
-          Error: {error instanceof Error ? error.message : String(error)}
+      <div className="flex flex-col items-center justify-center h-[400px] gap-6 text-center">
+        <img
+          src={wishlishEmpty}
+          alt="Wishlist empty"
+          className="w-[220px] h-[220px] object-contain opacity-80"
+        />
+        <p className="text-lg font-medium text-gray-600">
+          Your wishlist is empty 😔
         </p>
+        <button
+          onClick={() => navigate("/")}
+          className="px-6 py-2 bg-sy text-white font-semibold rounded-lg shadow hover:bg-sy/90 transition"
+        >
+          Go to Home
+        </button>
       </div>
     );
+  }
 
   return (
     <div className="container w-full py-12 px-8">
       <div className="mb-12">
-        <Title text="New Arrivals" link="products" />
+        <h2 className="text-2xl font-bold">My Wishlist</h2>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-14 place-items-center ">
-        {data?.map((item) => {
+        {wishlist.map((item: IData) => {
           const discountedPrice = Math.round(
             item.price * (1 - item.discountPercentage / 100)
           );
@@ -59,8 +57,6 @@ const ProductView = ({ data, error, loading }: ProductViewProps) => {
             item.rating - fStar >= 0.25 && item.rating - fStar <= 0.75;
           const pStar = hasHalf ? 1 : 0;
           const zStar = 5 - fStar - pStar;
-
-          const isLiked = wishlist.some((w: IData) => w.id === item.id);
 
           return (
             <Link
@@ -75,43 +71,15 @@ const ProductView = ({ data, error, loading }: ProductViewProps) => {
                   className="w-full h-full object-cover shadow-md"
                 />
 
-                <div className="absolute top-4 left-4 flex flex-col gap-2">
-                  <p className="py-1 px-[14px] text-bold text-[16px] uppercase text-sy rounded-[4px]">
-                    NEW
-                  </p>
-                  <p className="py-1 px-[14px] text-bold text-[16px] uppercase text-py bg-[#38CB89] rounded-[4px]">
-                    -{Math.round(item.discountPercentage)}%
-                  </p>
-                </div>
-
                 <div
-                  className="absolute top-4 right-4 w-8 h-8 rounded-full flex justify-center items-center bg-white shadow opacity-0 group-hover:opacity-100 cursor-pointer transition"
+                  className="absolute top-4 right-4 w-8 h-8 rounded-full flex justify-center items-center bg-white shadow cursor-pointer transition"
                   onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
                     dispatch(toggleLike(item));
                   }}
                 >
-                  {isLiked ? <FaHeart /> : <CiHeart />}
-                </div>
-
-                <div
-                  className="
-                    absolute bottom-4 left-0 w-full px-4 
-                    opacity-100 lg:opacity-0 lg:group-hover:opacity-100 
-                    transition
-                  "
-                >
-                  <button
-                    className="w-full bg-sy text-center py-2 text-white rounded-[8px] select-none"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      console.log("Add to cart:", item.id);
-                    }}
-                  >
-                    Add to cart
-                  </button>
+                  <FaHeart />
                 </div>
               </div>
 
@@ -149,4 +117,4 @@ const ProductView = ({ data, error, loading }: ProductViewProps) => {
   );
 };
 
-export default memo(ProductView);
+export default memo(WishlistView);

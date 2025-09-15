@@ -1,5 +1,7 @@
 import { lazy, memo, Suspense } from "react";
 import { useRoutes } from "react-router-dom";
+import Wishlist from "./wishlist";
+import Cart from "./cart";
 
 const MainLayout = lazy(() => import("./layout"));
 const Home = lazy(() => import("./home"));
@@ -20,6 +22,8 @@ const AppRouter = () => {
           children: [
             { path: "/", element: <Home /> },
             { path: "shop", element: <Shop /> },
+            { path: "wishlist", element: <Wishlist /> },
+            { path: "cart", element: <Cart /> },
             { path: "products/:id", element: <ProductDetail /> },
           ],
         },
