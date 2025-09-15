@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import logo from "../../../assets/logo.svg";
 
 const Header = () => {
@@ -9,7 +9,9 @@ const Header = () => {
     <section className="h-auto md:h-[60px] ">
       <div className="container mx-auto h-full px-4">
         <div className="h-full flex flex-row justify-between items-center py-2 md:py-0">
-          <img src={logo} alt="Logo" className="w-[100px] md:w-auto" />
+          <Link to={"/"}>
+            <img src={logo} alt="Logo" className="w-[100px] md:w-auto" />
+          </Link>
           <ul className="hidden md:flex gap-6 text-[#6C7275] text-sm md:text-base">
             <li>
               <NavLink
