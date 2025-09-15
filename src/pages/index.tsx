@@ -1,5 +1,6 @@
 import { lazy, memo, Suspense } from "react";
 import { useRoutes } from "react-router-dom";
+import ClipLoader from "react-spinners/ClipLoader";
 
 const MainLayout = lazy(() => import("./layout"));
 const Home = lazy(() => import("./home"));
@@ -7,11 +8,17 @@ const Shop = lazy(() => import("./shop"));
 const SignIn = lazy(() => import("./sign-in"));
 const Account = lazy(() => import("./account"));
 const Auth = lazy(() => import("./auth"));
-const ProductDetail = lazy(()=>import("./product/ProductDetail"))
+const ProductDetail = lazy(() => import("./product/ProductDetail"));
 
 const AppRouter = () => {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense
+      fallback={
+        <div className="flex justify-center items-center min-h-[60vh]">
+          <ClipLoader />
+        </div>
+      }
+    >
       {useRoutes([
         // puplic route with layout
         {

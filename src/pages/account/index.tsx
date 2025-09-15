@@ -4,18 +4,23 @@ import { useDispatch } from "react-redux";
 import { removeToken } from "../../lib/features/authSlice";
 import type { IUser } from "../../types";
 import profile_photo from "../../assets/profile-photo.svg";
-
+import ClipLoader from "react-spinners/ClipLoader";
 const Account = () => {
   const dispatch = useDispatch();
   const [data, setData] = useState<IUser | null>(null);
+  const [loading, setLoading] = useState(true);
   const [selected, setSelected] = useState("Account");
 
   useEffect(() => {
+    setLoading(true);
     api
       .get("/auth/me")
       .then((res) => setData(res.data))
       .catch(() => {
         dispatch(removeToken());
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, []);
 
@@ -26,6 +31,14 @@ const Account = () => {
     { label: "Wishlist" },
     { label: "Log Out", action: () => dispatch(removeToken()) },
   ];
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-[60vh]">
+        <ClipLoader />
+      </div>
+    );
+  }
 
   return (
     <div className="container py-10 md:py-20">
