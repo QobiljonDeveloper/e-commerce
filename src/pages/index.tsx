@@ -20,7 +20,7 @@ const AppRouter = () => {
           children: [
             { path: "/", element: <Home /> },
             { path: "shop", element: <Shop /> },
-            { path: "shop/:id", element: <ProductDetail /> },
+            { path: "products/:id", element: <ProductDetail /> },
           ],
         },
         // private route
