@@ -7,6 +7,7 @@ const Shop = lazy(() => import("./shop"));
 const SignIn = lazy(() => import("./sign-in"));
 const Account = lazy(() => import("./account"));
 const Auth = lazy(() => import("./auth"));
+const ProductDetail = lazy(()=>import("./product/ProductDetail"))
 
 const AppRouter = () => {
   return (
@@ -19,14 +20,21 @@ const AppRouter = () => {
           children: [
             { index: true, element: <Home /> },
             { path: "shop", element: <Shop /> },
+            { path: "shop/:id", element: <ProductDetail /> },
           ],
         },
         // private route
-        { path: "/", element: <Auth /> , children: [
-          { path: "", element: <MainLayout />, children: [
-            { path: "account", element: <Account /> },
-          ] },
-        ]},
+        {
+          path: "/",
+          element: <Auth />,
+          children: [
+            {
+              path: "",
+              element: <MainLayout />,
+              children: [{ path: "account", element: <Account /> }],
+            },
+          ],
+        },
         // puplic route without layout
         { path: "/sign-in", element: <SignIn /> },
       ])}
