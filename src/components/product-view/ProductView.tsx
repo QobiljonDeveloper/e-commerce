@@ -2,6 +2,7 @@ import { memo, useState } from "react";
 import { FaStar, FaRegStar, FaStarHalfAlt, FaHeart } from "react-icons/fa";
 import { CiHeart } from "react-icons/ci";
 import { Link } from "react-router-dom";
+import { Atom } from "react-loading-indicators";
 import Title from "../title";
 
 interface IData {
@@ -15,10 +16,28 @@ interface IData {
 
 interface ProductViewProps {
   data: IData[];
+  error: Error | null;
+  loading: boolean;
 }
 
-const ProductView = ({ data }: ProductViewProps) => {
+const ProductView = ({ data, error, loading }: ProductViewProps) => {
   const [liked, setLiked] = useState(false);
+
+  if (loading)
+    return (
+      <div className="flex items-center justify-center h-433">
+        <Atom color="#111" size="large" text="" textColor="" />
+      </div>
+    );
+
+  if (error)
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <p className="text-2xl font-semibold text-red-600 bg-red-100 px-6 py-3 rounded-lg">
+          Error: {error instanceof Error ? error.message : String(error)}
+        </p>
+      </div>
+    );
 
   return (
     <div className="container w-full py-12 px-8">
