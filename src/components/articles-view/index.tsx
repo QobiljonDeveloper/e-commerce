@@ -28,7 +28,7 @@ const articles = [
 
 const ArticlesView = () => {
   return (
-    <div className=" container w-full py-20 px-8">
+    <div className=" container w-full py-20">
       <div className="mb-10">
         <Title text="Articles" link="articles" />
       </div>

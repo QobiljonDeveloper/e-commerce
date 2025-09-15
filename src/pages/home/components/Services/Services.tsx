@@ -6,10 +6,10 @@ import services_phone from "../../../../assets/services-phone.svg";
 
 const Services = () => {
   return (
-    <section className="my-12 px-8">
+    <section className="my-12 ">
       <div className="container ">
         <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div className="bg-py py-14 px-9  ">
+          <div className="bg-py py-14   ">
             <img src={services_truck} alt="Free Shipping" />
             <p className="font-semibold lg:font-medium text-[14px] lg:text-[20px] text-sy mt-4">
               Free Shipping

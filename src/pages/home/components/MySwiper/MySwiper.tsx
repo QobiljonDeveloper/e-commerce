@@ -10,7 +10,7 @@ import mySwiper from "../../../../assets/mySwiper.png";
 
 const MySwiper = () => {
   return (
-    <div className="relative container w-full px-8 mt">
+    <div className="relative container w-full  mt">
       <Swiper
         slidesPerView={1}
         spaceBetween={16}

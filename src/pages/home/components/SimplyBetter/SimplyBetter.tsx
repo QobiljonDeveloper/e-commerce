@@ -3,7 +3,7 @@ import { memo } from "react";
 const SimplyBetter = () => {
   return (
     <section className="">
-      <div className="container box-content px-8 mt-8 ">
+      <div className="container box-content mt-8 ">
         <div className="flex flex-col lg:flex-row justify-between  lg:items-center gap-4 ">
           <div className="flex flex-col w-full lg:w-[70%]">
             <h3 className="font-medium text-3xl sm:text-2xl md:text-5xl lg:text-[64px] xl:text-[72px] leading-tight text-sy ">

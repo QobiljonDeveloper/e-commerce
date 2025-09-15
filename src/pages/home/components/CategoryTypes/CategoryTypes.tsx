@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 const CategoryTypes = () => {
   return (
-    <section className="container mx-auto py-10 px-8">
+    <section className="container mx-auto py-10 ">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="row-span-2 relative rounded-lg overflow-hidden">
           <img

@@ -6,8 +6,8 @@ const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <section className="h-auto md:h-[60px] ">
-      <div className="container mx-auto h-full px-4">
+    <section className="h-auto md:h-[60px]">
+      <div className="container mx-auto h-full ">
         <div className="h-full flex flex-row justify-between items-center py-2 md:py-0">
           <Link to={"/"}>
             <img src={logo} alt="Logo" className="w-[100px] md:w-auto" />
