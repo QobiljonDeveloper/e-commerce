@@ -5,6 +5,7 @@ import Cart from "./cart";
 import ClipLoader from "react-spinners/ClipLoader";
 import Blog from "./blog/Blog";
 import ContactUs from "./contactUs/ContactUs";
+import NotFound from "./404/404";
 
 
 
@@ -39,6 +40,7 @@ const AppRouter = () => {
             { path: "contact-us", element: <ContactUs /> },
 
             { path: "products/:id", element: <ProductDetail /> },
+            { path: "*", element: <NotFound /> },
           ],
         },
         // private route
