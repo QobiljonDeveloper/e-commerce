@@ -5,11 +5,11 @@ import { removeToken } from "../../lib/features/authSlice";
 import type { IUser } from "../../types";
 import profile_photo from "../../assets/profile-photo.svg";
 import ClipLoader from "react-spinners/ClipLoader";
-import { useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 
 const Account = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
   const [data, setData] = useState<IUser | null>(null);
   const [loading, setLoading] = useState(true);
   const [selected, setSelected] = useState("Account");
@@ -28,9 +28,9 @@ const Account = () => {
   }, []);
 
   const menuItems = [
-    { label: "Account" },
-    { label: "Address" },
-    { label: "Orders" },
+    { label: "Account", action: "" },
+    { label: "Address", action: "address" },
+    { label: "Orders", action: "orders" },
     { label: "Wishlist", action: "/wishlist" },
     { label: "Log Out", action: () => dispatch(removeToken()) },
   ];
@@ -81,7 +81,7 @@ const Account = () => {
                   onClick={() => {
                     setSelected(item.label);
                     if (typeof item.action === "string") {
-                      navigate(item.action); 
+                      navigate(item.action);
                     } else if (typeof item.action === "function") {
                       item.action();
                     }
@@ -117,36 +117,8 @@ const Account = () => {
             </div>
           </div>
 
-          <div className="lg:col-span-3 p-4 md:p-8 bg-white">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-sm">
-              <div>
-                <p className="text-gray-400">Email</p>
-                <p className="font-medium">{data.email}</p>
-              </div>
-              <div>
-                <p className="text-gray-400">Phone</p>
-                <p className="font-medium">{data.phone}</p>
-              </div>
-              <div>
-                <p className="text-gray-400">Birth Date</p>
-                <p className="font-medium">{data.birthDate}</p>
-              </div>
-              <div>
-                <p className="text-gray-400">Company</p>
-                <p className="font-medium">
-                  {data.company.title} – {data.company.name}
-                </p>
-              </div>
-            </div>
-
-            <div className="mt-8">
-              <p className="text-gray-400 text-sm">Address</p>
-              <p className="font-medium">
-                {data.address.address}, {data.address.city},{" "}
-                {data.address.state} {data.address.postalCode},{" "}
-                {data.address.country}
-              </p>
-            </div>
+          <div className="lg:col-span-3 w-full">
+            <Outlet context={data} />
           </div>
         </div>
       )}

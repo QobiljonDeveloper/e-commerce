@@ -6,8 +6,9 @@ import ClipLoader from "react-spinners/ClipLoader";
 import Blog from "./blog/Blog";
 import ContactUs from "./contactUs/ContactUs";
 import NotFound from "./404/404";
-
-
+import Address from "./account/components/address";
+import AccountSub from "./account/components/accountSub/index";
+import Orders from "./account/components/orders";
 
 const MainLayout = lazy(() => import("./layout"));
 const Home = lazy(() => import("./home"));
@@ -51,7 +52,20 @@ const AppRouter = () => {
             {
               path: "",
               element: <MainLayout />,
-              children: [{ path: "account", element: <Account /> }],
+              children: [
+                {
+                  path: "account",
+                  element: <Account />,
+                  children: [
+                    { index: true, element: <AccountSub /> },
+                    {
+                      path: "address",
+                      element: <Address />,
+                    },
+                    { path: "orders", element: <Orders /> },
+                  ],
+                },
+              ],
             },
           ],
         },
