@@ -1,9 +1,14 @@
 import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import logo from "../../../assets/logo.svg";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../../lib";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const wishlistCount = useSelector(
+    (state: RootState) => state.wishlist.value.length
+  );
 
   return (
     <section className="h-auto md:h-[60px]">
@@ -110,7 +115,28 @@ const Header = () => {
                 <circle cx="12" cy="12" r="10" />
               </svg>
             </NavLink>
-            <div className="flex items-center gap-1">
+            <NavLink to="/wishlist" className="flex relative">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="lucide lucide-heart"
+              >
+                <path d="M19 14c-1.5 2-3.5 3.5-7 6-3.5-2.5-5.5-4-7-6a5 5 0 0 1 7-7 5 5 0 0 1 7 7z" />
+              </svg>
+              {wishlistCount > 0 && (
+                <div className="w-[20px] h-[20px] grid place-items-center text-xs rounded-full bg-black text-white ml-[-8px] mt-[-8px]">
+                  <p className="mt-[-2px]">{wishlistCount}</p>
+                </div>
+              )}
+            </NavLink>
+            <NavLink to="/cart" className={"flex"}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="22"
@@ -129,7 +155,7 @@ const Header = () => {
               <div className="w-[20px] h-[20px] grid place-items-center text-xs rounded-full bg-black text-white">
                 <p className="mt-[-2px]">2</p>
               </div>
-            </div>
+            </NavLink>
           </div>
 
           <button
