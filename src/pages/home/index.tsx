@@ -12,14 +12,14 @@ import Services from "./components/Services/Services";
 import JoinUs from "./components/JoinUs";
 
 const Home = () => {
-  const { data } = useFetch("/products");
+  const { data, error,loading } = useFetch("/products", { limit: 4 });
 
   return (
     <div className="">
       <MySwiper />
       <SimplyBetter />
       <CategoryTypes />
-      {data && <ProductView data={data.products} />}
+      {data && <ProductView data={data.products} error={ error} loading={loading} />}
       <ArticlesView />
       <Services />
       <JoinUs />

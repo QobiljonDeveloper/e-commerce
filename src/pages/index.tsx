@@ -1,8 +1,11 @@
 import { lazy, memo, Suspense } from "react";
 import { useRoutes } from "react-router-dom";
+import Wishlist from "./wishlist";
+import Cart from "./cart";
 import ClipLoader from "react-spinners/ClipLoader";
 import Blog from "./blog/Blog";
 import ContactUs from "./contactUs/ContactUs";
+
 
 
 const MainLayout = lazy(() => import("./layout"));
@@ -30,8 +33,11 @@ const AppRouter = () => {
           children: [
             { path: "/", element: <Home /> },
             { path: "shop", element: <Shop /> },
+            { path: "wishlist", element: <Wishlist /> },
+            { path: "cart", element: <Cart /> },
             { path: "blog", element: <Blog /> },
             { path: "contact-us", element: <ContactUs /> },
+
             { path: "products/:id", element: <ProductDetail /> },
           ],
         },
