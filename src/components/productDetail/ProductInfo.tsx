@@ -1,10 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CountdownTimer from './CountdownTimer';
+import axios from 'axios';
 
-const ProductInfo: React.FC = () => {
+interface IProduct {
+  id: number;
+  price: number;
+  title: string;
+  description: string;
+  category: string;
+}
+
+interface IResponse {
+  currentImage: number;
+}
+
+const ProductInfo: React.FC<IResponse> = ({ currentImage }) => {
+  const [products, setProducts] = useState<IProduct[]>([]);
   const [count, setCount] = useState(1);
 
-
+  useEffect(() => {
+    axios
+      .get("https://dummyjson.com/products")
+      .then((res) => setProducts(res.data.products))
+      .catch((err) => console.log(err));
+  }, []);
 
   const inc = () => {
     setCount(prev => prev + 1);
@@ -16,6 +35,12 @@ const ProductInfo: React.FC = () => {
     }
   };
 
+  if (products.length === 0) {
+    return <div>Loading...</div>;
+  }
+
+  const product = products[currentImage] || products[0];
+
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-2">
@@ -26,21 +51,20 @@ const ProductInfo: React.FC = () => {
           <span className="text-lg">★</span>
           <span className="text-lg">★</span>
         </div>
-        <span className="text-sm text-gray">11 Reviews</span>
+        <span className="text-sm text-gray-500">11 Reviews</span>
       </div>
 
-
-      <h1 className="text-3xl font-bold text-gray-900">Tray Table</h1>
-
+      <h1 className="text-3xl font-bold text-gray-900">{product.title}</h1>
 
       <p className="text-gray-600 leading-relaxed">
-        Buy one or buy a few and make every space where you sit more convenient. 
-        Light and easy to move around with removable tray top, handy for serving snacks.
+        {product.description}
       </p>
 
       <div className="flex items-center gap-3">
-        <span className="text-3xl font-bold text-gray-900">$199.00</span>
-        <span className="text-xl text-gray-400 line-through">$400.00</span>
+        <span className="text-3xl font-bold text-gray-900">${product.price}</span>
+        <span className="text-xl text-gray-400 line-through">
+          ${(product.price * 1.2).toFixed(2)}
+        </span>
       </div>
 
       <CountdownTimer />
@@ -72,9 +96,7 @@ const ProductInfo: React.FC = () => {
       </div>
 
       <div className="flex gap-3">
-        <button className="flex-1 border py-3 px-6 rounded">
-          Wishlist
-        </button>
+        <button className="flex-1 border py-3 px-6 rounded">Wishlist</button>
         <button className="flex-1 bg-black text-white py-3 px-6 rounded">
           Add to Cart
         </button>
@@ -82,8 +104,8 @@ const ProductInfo: React.FC = () => {
 
       <div className="pt-4 border-t border-gray-200">
         <div className="flex justify-between text-sm text-gray-500">
-          <span>SKU: 1117</span>
-          <span>Category: Living Room, Bedroom</span>
+          <span>SKU: {product.id}</span>
+          <span>Category: {product.category}</span>
         </div>
       </div>
     </div>
@@ -91,4 +113,5 @@ const ProductInfo: React.FC = () => {
 };
 
 export default ProductInfo;
+
 
