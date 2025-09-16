@@ -5,8 +5,11 @@ import { removeToken } from "../../lib/features/authSlice";
 import type { IUser } from "../../types";
 import profile_photo from "../../assets/profile-photo.svg";
 import ClipLoader from "react-spinners/ClipLoader";
+import { useNavigate } from "react-router-dom";
+
 const Account = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate(); 
   const [data, setData] = useState<IUser | null>(null);
   const [loading, setLoading] = useState(true);
   const [selected, setSelected] = useState("Account");
@@ -28,7 +31,7 @@ const Account = () => {
     { label: "Account" },
     { label: "Address" },
     { label: "Orders" },
-    { label: "Wishlist" },
+    { label: "Wishlist", action: "/wishlist" },
     { label: "Log Out", action: () => dispatch(removeToken()) },
   ];
 
@@ -77,7 +80,11 @@ const Account = () => {
                   }`}
                   onClick={() => {
                     setSelected(item.label);
-                    if (item.action) item.action();
+                    if (typeof item.action === "string") {
+                      navigate(item.action); 
+                    } else if (typeof item.action === "function") {
+                      item.action();
+                    }
                   }}
                 >
                   {item.label}
@@ -91,8 +98,12 @@ const Account = () => {
                 onChange={(e) => {
                   const value = e.target.value;
                   setSelected(value);
+
                   if (value === "Log Out") {
                     dispatch(removeToken());
+                  }
+                  if (value === "Wishlist") {
+                    navigate("/wishlist");
                   }
                 }}
                 className="w-full p-2 rounded-md border border-gray-300"
