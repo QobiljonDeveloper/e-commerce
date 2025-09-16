@@ -1,7 +1,6 @@
 import { memo, useEffect, useState } from "react";
 import { api } from "../../../../api";
 import { removeToken } from "../../../../lib/features/authSlice";
-import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import type { IUser } from "../../../../types";
 
