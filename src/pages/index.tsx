@@ -2,6 +2,7 @@ import { lazy, memo, Suspense } from "react";
 import { useRoutes } from "react-router-dom";
 import Blog from "./blog/Blog";
 import ContactUs from "./contactUs/ContactUs";
+import NotFound from "./404/404";
 
 const MainLayout = lazy(() => import("./layout"));
 const Home = lazy(() => import("./home"));
@@ -25,6 +26,7 @@ const AppRouter = () => {
             { path: "blog", element: <Blog /> },
             { path: "contact-us", element: <ContactUs /> },
             { path: "products/:id", element: <ProductDetail /> },
+            { path: "*", element: <NotFound /> },
           ],
         },
         // private route
