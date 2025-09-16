@@ -43,8 +43,8 @@ const SignIn = () => {
           backgroundPosition: "center",
         }}
       >
-        <Link to={"/"}>
-          <img src={logo} alt="Logo" className="mx-auto mt-4 lg:mt-8" />
+        <Link to={"/"} className="mx-auto mt-4 lg:mt-8">
+          <img src={logo} alt="Logo" className="" />
         </Link>
       </div>
 
