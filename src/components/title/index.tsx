@@ -20,10 +20,10 @@ const Title: FC<ITitleProps> = ({ text, link }) => {
       </h2>
 
       <a
-        href={`/${link}`}
+        href={`/shop`}
         className="flex items-center gap-2 text-sy text-[16px] border-b"
       >
-        <span>More articles</span>
+        <span>More {link}</span>
         <FaArrowRightLong />
       </a>
     </div>
