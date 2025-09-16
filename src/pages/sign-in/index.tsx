@@ -3,7 +3,7 @@ import { api } from "../../api";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { setToken } from "../../lib/features/authSlice";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import loginImg from "../../assets/login.png";
 import logo from "../../assets/logo.svg";
 import { LuEye, LuEyeOff } from "react-icons/lu";
@@ -43,7 +43,9 @@ const SignIn = () => {
           backgroundPosition: "center",
         }}
       >
-        <img src={logo} alt="Logo" className="mx-auto mt-4 lg:mt-8" />
+        <Link to={"/"}>
+          <img src={logo} alt="Logo" className="mx-auto mt-4 lg:mt-8" />
+        </Link>
       </div>
 
       <form
