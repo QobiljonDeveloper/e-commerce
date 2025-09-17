@@ -9,6 +9,7 @@ import NotFound from "./404/404";
 import Address from "./account/components/address";
 import AccountSub from "./account/components/accountSub/index";
 import Orders from "./account/components/orders";
+import WishlistProfile from "./account/components/wishlistProfile";
 
 const MainLayout = lazy(() => import("./layout"));
 const Home = lazy(() => import("./home"));
@@ -63,6 +64,7 @@ const AppRouter = () => {
                       element: <Address />,
                     },
                     { path: "orders", element: <Orders /> },
+                    { path: "wishlist", element: <WishlistProfile /> },
                   ],
                 },
               ],

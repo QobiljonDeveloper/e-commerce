@@ -31,7 +31,7 @@ const Account = () => {
     { label: "Account", action: "" },
     { label: "Address", action: "address" },
     { label: "Orders", action: "orders" },
-    { label: "Wishlist", action: "/wishlist" },
+    { label: "Wishlist", action: "wishlist" },
     { label: "Log Out", action: () => dispatch(removeToken()) },
   ];
 
@@ -118,7 +118,7 @@ const Account = () => {
           </div>
 
           <div className="lg:col-span-3 w-full">
-            <Outlet context={data} />
+            <Outlet />
           </div>
         </div>
       )}

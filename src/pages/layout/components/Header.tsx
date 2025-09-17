@@ -55,18 +55,7 @@ const Header = () => {
                 Blog
               </NavLink>
             </li>
-            <li>
-              <NavLink
-                to="/product"
-                className={({ isActive }) =>
-                  isActive
-                    ? "font-semibold text-black underline"
-                    : "hover:underline"
-                }
-              >
-                Product
-              </NavLink>
-            </li>
+
             <li>
               <NavLink
                 to="/contact-us"
@@ -223,13 +212,7 @@ const Header = () => {
             >
               Blog
             </NavLink>
-            <NavLink
-              to="/product"
-              className="hover:underline"
-              onClick={() => setIsOpen(false)}
-            >
-              Product
-            </NavLink>
+
             <NavLink
               to="/contact-us"
               className="hover:underline"
