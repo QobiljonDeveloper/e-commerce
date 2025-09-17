@@ -9,6 +9,7 @@ const Header = () => {
   const wishlistCount = useSelector(
     (state: RootState) => state.wishlist.value.length
   );
+  const cartCount = useSelector((state: RootState) => state.cart.value.length);
 
   return (
     <section className="h-auto md:h-[60px]">
@@ -153,7 +154,7 @@ const Header = () => {
                 <path d="M8 11V6a4 4 0 0 1 8 0v5" />
               </svg>
               <div className="w-[20px] h-[20px] grid place-items-center text-xs rounded-full bg-black text-white">
-                <p className="mt-[-2px]">2</p>
+                <p className="mt-[-2px]">{cartCount}</p>
               </div>
             </NavLink>
           </div>

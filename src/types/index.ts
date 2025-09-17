@@ -110,3 +110,8 @@ export interface IUser {
   role: string;
 }
 
+
+
+export type ICartProduct = {
+  quantity: number;
+} & IProduct;
