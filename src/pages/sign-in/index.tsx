@@ -34,7 +34,7 @@ const SignIn = () => {
   };
 
   return (
-    <div className="flex flex-col lg:flex-row items-center gap-10 min-h-screen">
+    <div className="  flex flex-col lg:flex-row items-center gap-10 min-h-screen">
       <div
         className="w-full lg:w-1/2 h-[430px] lg:h-screen relative flex items-start"
         style={{
