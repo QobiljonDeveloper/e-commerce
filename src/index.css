@@ -9,11 +9,11 @@
   --color-text-sy: #6e7275;
 }
 .container {
-  max-width: 1120px;
+  max-width: 1144px;
   width: 100%;
   margin-left: auto;
   margin-right: auto;
-  box-sizing: border-box;
+  padding: 0 12px;
 }
 
 .custom-prev.swiper-button-disabled,
