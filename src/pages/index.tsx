@@ -10,12 +10,18 @@ import Address from "./account/components/address";
 import AccountSub from "./account/components/accountSub/index";
 import Orders from "./account/components/orders";
 
+import Detail from "./detail";
+import AdditionalInfo from "./product/AdditionalInfo";
+import Questions from "./product/Questions";
+import Reviews from "./product/Reviews";
+
 const MainLayout = lazy(() => import("./layout"));
 const Home = lazy(() => import("./home"));
 const Shop = lazy(() => import("./shop"));
 const SignIn = lazy(() => import("./sign-in"));
 const Account = lazy(() => import("./account"));
 const Auth = lazy(() => import("./auth"));
+
 const ProductDetail = lazy(() => import("./product/ProductDetail"));
 
 const AppRouter = () => {
@@ -35,6 +41,16 @@ const AppRouter = () => {
           children: [
             { path: "/", element: <Home /> },
             { path: "shop", element: <Shop /> },
+
+            {
+              path: "products/:id",
+              element: <Detail />,
+              children: [
+                { index: true, element: <AdditionalInfo/> },
+                { path: "questions", element: <Questions/> },
+                { path: "reviews", element: <Reviews/>},
+              ],
+            },
             { path: "wishlist", element: <Wishlist /> },
             { path: "cart", element: <Cart /> },
             { path: "blog", element: <Blog /> },
@@ -42,6 +58,7 @@ const AppRouter = () => {
 
             { path: "products/:id", element: <ProductDetail /> },
             { path: "*", element: <NotFound /> },
+
           ],
         },
         // private route
