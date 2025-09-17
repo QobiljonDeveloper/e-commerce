@@ -56,18 +56,7 @@ const Header = () => {
                 Blog
               </NavLink>
             </li>
-            <li>
-              <NavLink
-                to="/product"
-                className={({ isActive }) =>
-                  isActive
-                    ? "font-semibold text-black underline"
-                    : "hover:underline"
-                }
-              >
-                Product
-              </NavLink>
-            </li>
+
             <li>
               <NavLink
                 to="/contact-us"
@@ -132,12 +121,13 @@ const Header = () => {
                 <path d="M19 14c-1.5 2-3.5 3.5-7 6-3.5-2.5-5.5-4-7-6a5 5 0 0 1 7-7 5 5 0 0 1 7 7z" />
               </svg>
               {wishlistCount > 0 && (
-                <div className="w-[20px] h-[20px] grid place-items-center text-xs rounded-full bg-black text-white ml-[-8px] mt-[-8px]">
-                  <p className="mt-[-2px]">{wishlistCount}</p>
+                <div className="absolute -top-2 -right-2 w-[20px] h-[20px] grid place-items-center text-xs rounded-full bg-black text-white">
+                  {wishlistCount}
                 </div>
               )}
             </NavLink>
-            <NavLink to="/cart" className={"flex"}>
+
+            <NavLink to="/cart" className="flex relative">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="22"
@@ -153,9 +143,11 @@ const Header = () => {
                 <path d="M2.048 18.566A2 2 0 0 0 4 21h16a2 2 0 0 0 1.952-2.434l-2-9A2 2 0 0 0 18 8H6a2 2 0 0 0-1.952 1.566z" />
                 <path d="M8 11V6a4 4 0 0 1 8 0v5" />
               </svg>
-              <div className="w-[20px] h-[20px] grid place-items-center text-xs rounded-full bg-black text-white">
-                <p className="mt-[-2px]">{cartCount}</p>
-              </div>
+              {cartCount > 0 && (
+                <div className="absolute -top-2 -right-2 w-[20px] h-[20px] grid place-items-center text-xs rounded-full bg-black text-white">
+                  {cartCount}
+                </div>
+              )}
             </NavLink>
           </div>
 
@@ -223,13 +215,6 @@ const Header = () => {
               onClick={() => setIsOpen(false)}
             >
               Blog
-            </NavLink>
-            <NavLink
-              to="/product"
-              className="hover:underline"
-              onClick={() => setIsOpen(false)}
-            >
-              Product
             </NavLink>
             <NavLink
               to="/contact-us"
