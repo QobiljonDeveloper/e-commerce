@@ -10,19 +10,19 @@ const articles = [
     id: 1,
     title: "7 ways to decor your home",
     image: article1,
-    link: "/articles/1",
+    link: "/blog/1",
   },
   {
     id: 2,
     title: "Kitchen organization",
     image: article2,
-    link: "/articles/2",
+    link: "/blog/2",
   },
   {
     id: 3,
     title: "Decor your bedroom",
     image: article3,
-    link: "/articles/3",
+    link: "/blog/3",
   },
 ];
 
@@ -30,7 +30,7 @@ const ArticlesView = () => {
   return (
     <div className=" container w-full py-20">
       <div className="mb-10">
-        <Title text="Articles" link="articles" />
+        <Title text="Articles" link="blog" />
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
