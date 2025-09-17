@@ -9,6 +9,7 @@ import NotFound from "./404/404";
 import Address from "./account/components/address";
 import AccountSub from "./account/components/accountSub/index";
 import Orders from "./account/components/orders";
+import WishlistProfile from "./account/components/wishlistProfile";
 
 import Detail from "./detail";
 import AdditionalInfo from "./product/AdditionalInfo";
@@ -80,6 +81,7 @@ const AppRouter = () => {
                       element: <Address />,
                     },
                     { path: "orders", element: <Orders /> },
+                    { path: "wishlist", element: <WishlistProfile /> },
                   ],
                 },
               ],

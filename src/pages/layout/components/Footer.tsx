@@ -5,7 +5,7 @@ import icons from "../../../assets/social-icons.svg"
 
 const Footer = () => {
   return (
-    <section className='bg-[#141718] w-full h-auto md:h-[250px]'>
+    <section className='bg-[#141718] w-full h-auto md:h-[250px] mt-10'>
       <div className="container mx-auto h-full px-4">
         <div className='h-auto md:h-3/4 flex flex-col md:flex-row items-center justify-between gap-4 md:gap-0 py-4 md:py-0'>
           <div className='flex flex-col sm:flex-row justify-center md:justify-start items-center gap-3 sm:gap-5'>

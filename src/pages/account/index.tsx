@@ -31,7 +31,7 @@ const Account = () => {
     { label: "Account", action: "" },
     { label: "Address", action: "address" },
     { label: "Orders", action: "orders" },
-    { label: "Wishlist", action: "/wishlist" },
+    { label: "Wishlist", action: "wishlist" },
     { label: "Log Out", action: () => dispatch(removeToken()) },
   ];
 
@@ -99,11 +99,15 @@ const Account = () => {
                   const value = e.target.value;
                   setSelected(value);
 
-                  if (value === "Log Out") {
-                    dispatch(removeToken());
-                  }
-                  if (value === "Wishlist") {
-                    navigate("/wishlist");
+                  const selectedItem = menuItems.find(
+                    (item) => item.label === value
+                  );
+                  if (selectedItem) {
+                    if (typeof selectedItem.action === "string") {
+                      navigate(selectedItem.action);
+                    } else if (typeof selectedItem.action === "function") {
+                      selectedItem.action();
+                    }
                   }
                 }}
                 className="w-full p-2 rounded-md border border-gray-300"
@@ -118,7 +122,7 @@ const Account = () => {
           </div>
 
           <div className="lg:col-span-3 w-full">
-            <Outlet context={data} />
+            <Outlet />
           </div>
         </div>
       )}
