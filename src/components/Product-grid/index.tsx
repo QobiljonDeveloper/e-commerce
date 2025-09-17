@@ -89,7 +89,11 @@ const ProductGrid = ({ data, loading, error, limit = 4 }: ProductGridProps) => {
               </div>
 
               <button
-                className="absolute top-4 right-4 w-8 h-8 rounded-full flex justify-center items-center bg-white shadow opacity-0 group-hover:opacity-100 cursor-pointer transition"
+                className="
+    absolute top-4 right-4 w-8 h-8 rounded-full flex justify-center items-center
+    bg-white shadow cursor-pointer transition
+    opacity-100 md:opacity-0 md:group-hover:opacity-100
+  "
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
