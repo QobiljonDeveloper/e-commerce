@@ -51,7 +51,6 @@ const AppRouter = () => {
                 { path: "reviews", element: <Reviews/>},
               ],
             },
-=======
             { path: "wishlist", element: <Wishlist /> },
             { path: "cart", element: <Cart /> },
             { path: "blog", element: <Blog /> },
