@@ -19,7 +19,7 @@ const SignIn = () => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-    const body = { username, password, expiresInMins: 1 };
+    const body = { username, password, expiresInMins: 10 };
     api
       .post("/auth/login", body)
       .then((res) => {
