@@ -99,11 +99,15 @@ const Account = () => {
                   const value = e.target.value;
                   setSelected(value);
 
-                  if (value === "Log Out") {
-                    dispatch(removeToken());
-                  }
-                  if (value === "Wishlist") {
-                    navigate("/wishlist");
+                  const selectedItem = menuItems.find(
+                    (item) => item.label === value
+                  );
+                  if (selectedItem) {
+                    if (typeof selectedItem.action === "string") {
+                      navigate(selectedItem.action);
+                    } else if (typeof selectedItem.action === "function") {
+                      selectedItem.action();
+                    }
                   }
                 }}
                 className="w-full p-2 rounded-md border border-gray-300"

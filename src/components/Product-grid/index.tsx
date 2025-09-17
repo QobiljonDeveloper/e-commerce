@@ -4,18 +4,17 @@ import { CiHeart } from "react-icons/ci";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleLike } from "../../lib/features/wishlistSlice";
-
-interface IData {
-  id: number;
-  title: string;
-  thumbnail: string;
-  rating: number;
-  price: number;
-  discountPercentage: number;
-}
+import {
+  addToCart,
+  increaseAmount,
+  decreaseAmount,
+  removeFromCart,
+  setQuantity,
+} from "../../lib/features/cartSlice";
+import type { ICartProduct, IProduct } from "../../types";
 
 interface ProductGridProps {
-  data: IData[];
+  data: IProduct[];
   loading?: boolean;
   error?: Error | null;
   limit?: number;
@@ -23,15 +22,17 @@ interface ProductGridProps {
 
 const ProductGrid = ({ data, loading, error, limit = 4 }: ProductGridProps) => {
   const wishlist = useSelector((state: any) => state.wishlist.value);
+  const cart: ICartProduct[] = useSelector((state: any) => state.cart.value);
   const dispatch = useDispatch();
+  console.log(cart);
 
   if (loading) {
     return (
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-14 place-items-center">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full">
         {Array.from({ length: limit }).map((_, i) => (
           <div
             key={i}
-            className="w-[262px] h-[433px] bg-gray-200 rounded-lg animate-pulse"
+            className="w-full sm:w-[262px] h-[433px] bg-gray-200 rounded-lg animate-pulse"
           />
         ))}
       </div>
@@ -49,7 +50,7 @@ const ProductGrid = ({ data, loading, error, limit = 4 }: ProductGridProps) => {
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 place-items-center">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full">
       {data?.map((item) => {
         const discountedPrice = Math.round(
           item.price * (1 - item.discountPercentage / 100)
@@ -61,15 +62,17 @@ const ProductGrid = ({ data, loading, error, limit = 4 }: ProductGridProps) => {
         const pStar = hasHalf ? 1 : 0;
         const zStar = 5 - fStar - pStar;
 
-        const isLiked = wishlist.some((w: IData) => w.id === item.id);
+        const isLiked = wishlist.some((w: IProduct) => w.id === item.id);
+
+        const cartItem = cart.find((c) => c.id === item.id);
 
         return (
           <Link
             to={`/products/${item.id}`}
             key={item.id}
-            className="container group w-[262px] h-[433px] transition overflow-hidden flex flex-col gap-3"
+            className="group w-full sm:w-[262px] h-[433px] transition overflow-hidden flex flex-col gap-3"
           >
-            <div className="w-[262px] h-[349px] relative overflow-hidden bg-[#F3F5F7]">
+            <div className="w-full h-[349px] relative overflow-hidden bg-[#F3F5F7]">
               <img
                 src={item.thumbnail}
                 alt={item.title}
@@ -101,16 +104,66 @@ const ProductGrid = ({ data, loading, error, limit = 4 }: ProductGridProps) => {
                 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 
                 transition"
               >
-                <button
-                  className="w-full bg-sy text-center py-2 text-white rounded-md select-none shadow"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    console.log("Add to cart:", item.id);
-                  }}
-                >
-                  Add to cart
-                </button>
+                {cartItem ? (
+                  <div className="flex justify-between items-center gap-2 w-full bg-white rounded-lg shadow-md px-1">
+                    <button
+                      className="px-6 text-3xl font-medium hover:text-red-600 transition"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        if (cartItem.quantity > 1) {
+                          dispatch(decreaseAmount(cartItem));
+                        } else {
+                          dispatch(removeFromCart(cartItem));
+                        }
+                      }}
+                    >
+                      −
+                    </button>
+                    <input
+                      type="number"
+                      value={cartItem.quantity}
+                      onFocus={(e) => e.stopPropagation()}
+                      onClick={(e) => e.stopPropagation()}
+                      onKeyDown={(e) => e.stopPropagation()}
+                      onChange={(e) => {
+                        e.stopPropagation();
+                        const newValue = Number(e.target.value);
+
+                        if (newValue > 0) {
+                          dispatch(
+                            setQuantity({ product: item, quantity: newValue })
+                          );
+                        } else {
+                          dispatch(removeFromCart(cartItem));
+                        }
+                      }}
+                      className="w-16 text-center text-2xl text-gray-900 border border-gray-300 rounded-md focus:outline-none"
+                    />
+
+                    <button
+                      className="px-6 text-3xl font-medium hover:text-green-600 transition"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        dispatch(increaseAmount(cartItem));
+                      }}
+                    >
+                      +
+                    </button>
+                  </div>
+                ) : (
+                  <button
+                    className="w-full bg-sy text-center py-2 text-white rounded-md select-none shadow"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      dispatch(addToCart(item));
+                    }}
+                  >
+                    Add to cart
+                  </button>
+                )}
               </div>
             </div>
 
