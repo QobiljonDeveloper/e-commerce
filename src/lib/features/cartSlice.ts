@@ -1,3 +1,4 @@
+
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { IProduct } from "../../types";
 
@@ -10,7 +11,7 @@ interface ICart {
 }
 
 const initialState: ICart = {
-  value: JSON.parse(localStorage.getItem("cart") || "[]") || [],
+  value: JSON.parse(localStorage.getItem("cart") || '[]') || [],
 };
 
 export const cartSlice = createSlice({
@@ -71,3 +72,4 @@ export const {
   removeFromCart,
 } = cartSlice.actions;
 export default cartSlice.reducer;
+
