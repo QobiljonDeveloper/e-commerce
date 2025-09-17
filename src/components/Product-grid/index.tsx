@@ -28,11 +28,11 @@ const ProductGrid = ({ data, loading, error, limit = 4 }: ProductGridProps) => {
 
   if (loading) {
     return (
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-14 place-items-center">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full">
         {Array.from({ length: limit }).map((_, i) => (
           <div
             key={i}
-            className="w-[262px] h-[433px] bg-gray-200 rounded-lg animate-pulse"
+            className="w-full sm:w-[262px] h-[433px] bg-gray-200 rounded-lg animate-pulse"
           />
         ))}
       </div>
@@ -50,7 +50,7 @@ const ProductGrid = ({ data, loading, error, limit = 4 }: ProductGridProps) => {
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 place-items-center">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full">
       {data?.map((item) => {
         const discountedPrice = Math.round(
           item.price * (1 - item.discountPercentage / 100)
@@ -70,9 +70,9 @@ const ProductGrid = ({ data, loading, error, limit = 4 }: ProductGridProps) => {
           <Link
             to={`/products/${item.id}`}
             key={item.id}
-            className="container group w-[262px] h-[433px] transition overflow-hidden flex flex-col gap-3"
+            className="group w-full sm:w-[262px] h-[433px] transition overflow-hidden flex flex-col gap-3"
           >
-            <div className="w-[262px] h-[349px] relative overflow-hidden bg-[#F3F5F7]">
+            <div className="w-full h-[349px] relative overflow-hidden bg-[#F3F5F7]">
               <img
                 src={item.thumbnail}
                 alt={item.title}

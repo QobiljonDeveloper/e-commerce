@@ -1,3 +1,4 @@
+
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { IProduct } from "../../types";
 
@@ -100,3 +101,6 @@ export const {
 } = cartSlice.actions;
 
 export default cartSlice.reducer;
+
+
+
