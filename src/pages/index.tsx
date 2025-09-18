@@ -1,5 +1,5 @@
 import { lazy, memo, Suspense } from "react";
-import { useRoutes } from "react-router-dom";
+import { Navigate, useRoutes } from "react-router-dom";
 import Wishlist from "./wishlist";
 import Cart from "./cart";
 import ClipLoader from "react-spinners/ClipLoader";
@@ -15,6 +15,10 @@ import Detail from "./detail";
 import AdditionalInfo from "./product/AdditionalInfo";
 import Questions from "./product/Questions";
 import Reviews from "./product/Reviews";
+import Completed from "./cart/pages/Completed";
+
+const AddCart = lazy(() => import("../pages/cart/pages/Addcart"));
+const Checkout = lazy(() => import("../pages/cart/pages/Checkout"));
 
 const MainLayout = lazy(() => import("./layout"));
 const Home = lazy(() => import("./home"));
@@ -44,22 +48,31 @@ const AppRouter = () => {
             { path: "shop", element: <Shop /> },
 
             {
-              path: "products/:id",
-              element: <Detail />,
+              path: "cart",
+              element: <Cart />,
               children: [
-                { index: true, element: <AdditionalInfo/> },
-                { path: "questions", element: <Questions/> },
-                { path: "reviews", element: <Reviews/>},
+                { index: true, element: <Navigate to="add" replace /> },
+                { path: "add", element: <AddCart /> },
+                { path: "checkout", element: <Checkout /> },
+                { path: "completed", element: <Completed /> },
               ],
             },
             { path: "wishlist", element: <Wishlist /> },
-            { path: "cart", element: <Cart /> },
+
+            {
+              path: "products/:id",
+              element: <Detail />,
+              children: [
+                { index: true, element: <AdditionalInfo /> },
+                { path: "questions", element: <Questions /> },
+                { path: "reviews", element: <Reviews /> },
+              ],
+            },
             { path: "blog", element: <Blog /> },
             { path: "contact-us", element: <ContactUs /> },
 
             { path: "products/:id", element: <ProductDetail /> },
             { path: "*", element: <NotFound /> },
-
           ],
         },
         // private route

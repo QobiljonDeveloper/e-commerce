@@ -11,10 +11,19 @@ const Header = () => {
   );
   const cartCount = useSelector((state: RootState) => state.cart.value.length);
 
+  // DRY uslubda nav linklar
+  const navLinks = [
+    { to: "/", label: "Home" },
+    { to: "/shop", label: "Shop" },
+    { to: "/product", label: "Product" },
+    { to: "/contact-us", label: "Contact Us" },
+  ];
+
   return (
     <section className="h-auto md:h-[60px] border-b border-gray-200">
       <div className="container mx-auto h-full">
         <div className="h-full flex flex-row justify-between items-center py-2 md:py-0">
+          {/* Left side: menu button (mobile) + logo */}
           <div className="flex items-center gap-2">
             <button
               onClick={() => setIsOpen(true)}
@@ -43,58 +52,27 @@ const Header = () => {
             </Link>
           </div>
 
+          {/* Desktop nav */}
           <ul className="hidden md:flex gap-6 text-[#6C7275] text-sm md:text-base">
-            <li>
-              <NavLink
-                to="/"
-                className={({ isActive }) =>
-                  isActive
-                    ? "font-semibold text-black underline"
-                    : "hover:underline"
-                }
-              >
-                Home
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/shop"
-                className={({ isActive }) =>
-                  isActive
-                    ? "font-semibold text-black underline"
-                    : "hover:underline"
-                }
-              >
-                Shop
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/blog"
-                className={({ isActive }) =>
-                  isActive
-                    ? "font-semibold text-black underline"
-                    : "hover:underline"
-                }
-              >
-                Blog
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/contact-us"
-                className={({ isActive }) =>
-                  isActive
-                    ? "font-semibold text-black underline"
-                    : "hover:underline"
-                }
-              >
-                Contact Us
-              </NavLink>
-            </li>
+            {navLinks.map((link) => (
+              <li key={link.to}>
+                <NavLink
+                  to={link.to}
+                  className={({ isActive }) =>
+                    isActive
+                      ? "font-semibold text-black underline"
+                      : "hover:underline"
+                  }
+                >
+                  {link.label}
+                </NavLink>
+              </li>
+            ))}
           </ul>
 
+          {/* Desktop icons */}
           <div className="hidden md:flex items-center gap-3">
+            {/* Search */}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="22"
@@ -111,6 +89,7 @@ const Header = () => {
               <circle cx="11" cy="11" r="8" />
             </svg>
 
+            {/* Account */}
             <NavLink to="/account">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -130,6 +109,7 @@ const Header = () => {
               </svg>
             </NavLink>
 
+            {/* Wishlist */}
             <NavLink to="/wishlist" className="flex relative">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -146,13 +126,14 @@ const Header = () => {
                 <path d="M19 14c-1.5 2-3.5 3.5-7 6-3.5-2.5-5.5-4-7-6a5 5 0 0 1 7-7 5 5 0 0 1 7 7z" />
               </svg>
               {wishlistCount > 0 && (
-                <div className="w-[20px] h-[20px] grid place-items-center text-xs rounded-full bg-black text-white ml-[-8px] mt-[-8px]">
-                  <p className="mt-[-2px]">{wishlistCount}</p>
+                <div className="absolute -top-2 -right-2 w-[20px] h-[20px] grid place-items-center text-xs rounded-full bg-black text-white">
+                  {wishlistCount}
                 </div>
               )}
             </NavLink>
 
-            <NavLink to="/cart" className="flex">
+            {/* Cart */}
+            <NavLink to="/cart" className="flex relative">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="22"
@@ -168,14 +149,17 @@ const Header = () => {
                 <path d="M2.048 18.566A2 2 0 0 0 4 21h16a2 2 0 0 0 1.952-2.434l-2-9A2 2 0 0 0 18 8H6a2 2 0 0 0-1.952 1.566z" />
                 <path d="M8 11V6a4 4 0 0 1 8 0v5" />
               </svg>
-              <div className="w-[20px] h-[20px] grid place-items-center text-xs rounded-full bg-black text-white">
-                <p className="mt-[-2px]">{cartCount}</p>
-              </div>
+              {cartCount > 0 && (
+                <div className="absolute -top-2 -right-2 w-[20px] h-[20px] grid place-items-center text-xs rounded-full bg-black text-white">
+                  {cartCount}
+                </div>
+              )}
             </NavLink>
           </div>
         </div>
       </div>
 
+      {/* Mobile sidebar nav */}
       <div
         className={`fixed inset-0 z-40 transition-opacity duration-300 ${
           isOpen
@@ -183,6 +167,7 @@ const Header = () => {
             : "opacity-0 pointer-events-none"
         }`}
       >
+        {/* Overlay */}
         <div
           className={`absolute inset-0 bg-black/40 transition-opacity duration-300 ${
             isOpen ? "opacity-100" : "opacity-0"
@@ -190,6 +175,7 @@ const Header = () => {
           onClick={() => setIsOpen(false)}
         />
 
+        {/* Sidebar */}
         <div
           className={`absolute top-0 left-0 w-64 h-full bg-white shadow-lg p-6 transform transition-transform duration-300 ${
             isOpen ? "translate-x-0" : "-translate-x-full"
@@ -218,23 +204,23 @@ const Header = () => {
           </button>
 
           <nav className="flex flex-col gap-4 text-sm text-[#6C7275]">
-            <NavLink to="/" onClick={() => setIsOpen(false)}>
-              Home
-            </NavLink>
-            <NavLink to="/shop" onClick={() => setIsOpen(false)}>
-              Shop
-            </NavLink>
-            <NavLink to="/blog" onClick={() => setIsOpen(false)}>
-              Blog
-            </NavLink>
-            <NavLink to="/contact-us" onClick={() => setIsOpen(false)}>
-              Contact Us
-            </NavLink>
+            {navLinks.map((link) => (
+              <NavLink
+                key={link.to}
+                to={link.to}
+                className="hover:underline"
+                onClick={() => setIsOpen(false)}
+              >
+                {link.label}
+              </NavLink>
+            ))}
           </nav>
         </div>
       </div>
 
+      {/* Mobile bottom nav */}
       <div className="fixed bottom-0 left-0 w-full bg-white border-t flex justify-around items-center py-2 md:hidden z-50">
+        {/* Search */}
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="26"
@@ -251,6 +237,7 @@ const Header = () => {
           <circle cx="11" cy="11" r="8" />
         </svg>
 
+        {/* Account */}
         <NavLink to="/account">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -270,6 +257,7 @@ const Header = () => {
           </svg>
         </NavLink>
 
+        {/* Wishlist */}
         <NavLink to="/wishlist" className="relative">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -292,6 +280,7 @@ const Header = () => {
           )}
         </NavLink>
 
+        {/* Cart */}
         <NavLink to="/cart" className="relative">
           <svg
             xmlns="http://www.w3.org/2000/svg"
