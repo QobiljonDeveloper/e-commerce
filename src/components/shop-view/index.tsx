@@ -2,6 +2,7 @@ import { memo, useEffect, useState, type ChangeEvent } from "react";
 import { useFetch } from "../../hooks/useFetch";
 import ProductGrid from "../Product-grid";
 import { DollarSign, Tag, ArrowUpDown } from "lucide-react";
+import type { IProduct } from "../../types";
 
 const ShopView = () => {
   const [minPrice, setMinPrice] = useState<number | undefined>(undefined);
@@ -9,81 +10,77 @@ const ShopView = () => {
   const [order, setOrder] = useState("id-asc");
   const [category, setCategory] = useState<string>("All");
   const [categories, setCategories] = useState<string[]>([]);
-  const [products, setProducts] = useState<any[]>([]);
+  const [products, setProducts] = useState<IProduct[]>([]);
   const [skip, setSkip] = useState(0);
   const limit = 4;
 
-  const { data, error, loading } = useFetch("/products", { limit: 100 });
+  const { data, error, loading, refetch } = useFetch("/products");
+  useEffect(() => {
+    refetch({ limit, skip: 0, order, category, minPrice, maxPrice });
+  }, []);
 
   useEffect(() => {
     if (data?.products) {
-      const uniqueCats = [
-        "All",
-        ...new Set(data.products.map((p: any) => p.category)),
-      ];
-      setCategories(uniqueCats as any);
+      if (skip === 0) {
+        setProducts(data.products);
+      } else {
+        setProducts((prev) => [...prev, ...data.products]);
+      }
+
+      if (categories.length === 0 && data.products.length > 0) {
+        const uniqueCats = [
+          "All",
+          ...new Set(data.products.map((p: any) => p.category)),
+        ];
+        setCategories(uniqueCats as string[]);
+      }
     }
   }, [data]);
 
-  useEffect(() => {
-    if (data?.products) {
-      let filtered = [...data.products];
+  const handleShowMore = () => {
+    const newSkip = skip + limit;
+    setSkip(newSkip);
+    refetch({ limit, skip: newSkip, order, category, minPrice, maxPrice });
+  };
 
-      if (category !== "All") {
-        filtered = filtered.filter((p) => p.category === category);
-      }
-
-      filtered = filtered.filter((p) => {
-        const price = p.price;
-        const min = minPrice ?? 0;
-        const max = maxPrice ?? Infinity;
-        return price >= min && price <= max;
-      });
-
-      if (order === "price-asc") {
-        filtered.sort((a, b) => a.price - b.price);
-      } else if (order === "price-desc") {
-        filtered.sort((a, b) => b.price - a.price);
-      } else if (order === "id-asc") {
-        filtered.sort((a, b) => a.id - b.id);
-      }
-      setProducts(filtered.slice(0, skip + limit));
-    }
-  }, [data, category, minPrice, maxPrice, order, skip]);
+  const resetAndFetch = (updates: Partial<any>) => {
+    setSkip(0);
+    refetch({
+      limit,
+      skip: 0,
+      order,
+      category,
+      minPrice,
+      maxPrice,
+      ...updates,
+    });
+  };
 
   const handleChangeOrder = (e: ChangeEvent<HTMLSelectElement>) => {
     setOrder(e.target.value);
-    setSkip(0);
+    resetAndFetch({ order: e.target.value });
   };
 
   const handleCategoryChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setCategory(e.target.value);
-    setSkip(0);
+    resetAndFetch({ category: e.target.value });
   };
 
   const handleMinPrice = (e: ChangeEvent<HTMLInputElement>) => {
-    setMinPrice(e.target.value ? Number(e.target.value) : undefined);
-    setSkip(0);
+    const value = e.target.value ? Number(e.target.value) : undefined;
+    setMinPrice(value);
+    resetAndFetch({ minPrice: value });
   };
 
   const handleMaxPrice = (e: ChangeEvent<HTMLInputElement>) => {
-    setMaxPrice(e.target.value ? Number(e.target.value) : undefined);
-    setSkip(0);
+    const value = e.target.value ? Number(e.target.value) : undefined;
+    setMaxPrice(value);
+    resetAndFetch({ maxPrice: value });
   };
-
-  const filteredCount =
-    data?.products.filter((p: any) => {
-      const price = p.price;
-      const min = minPrice ?? 0;
-      const max = maxPrice ?? Infinity;
-      const catOk = category === "All" || p.category === category;
-      return price >= min && price <= max && catOk;
-    }).length || 0;
 
   return (
     <div className="container w-full py-12 flex flex-col gap-10">
       <div className="flex gap-4 items-center flex-wrap">
-        {/* Min Price */}
         <div className="relative">
           <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 w-4 h-4" />
           <input
@@ -94,7 +91,6 @@ const ShopView = () => {
           />
         </div>
 
-        {/* Max Price */}
         <div className="relative">
           <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 w-4 h-4" />
           <input
@@ -105,7 +101,6 @@ const ShopView = () => {
           />
         </div>
 
-        {/* Category */}
         <div className="relative">
           <Tag className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 w-4 h-4" />
           <select
@@ -121,7 +116,6 @@ const ShopView = () => {
           </select>
         </div>
 
-        {/* Sort */}
         <div className="relative">
           <ArrowUpDown className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 w-4 h-4" />
           <select
@@ -136,17 +130,12 @@ const ShopView = () => {
         </div>
       </div>
 
-      <ProductGrid
-        data={products}
-        error={error}
-        loading={loading}
-        limit={limit}
-      />
+      <ProductGrid data={products} error={error} loading={loading} />
 
       <div className="flex justify-center">
-        {products.length < filteredCount && (
+        {data?.products?.length === limit && (
           <button
-            onClick={() => setSkip((prev) => prev + limit)}
+            onClick={handleShowMore}
             className="border border-[#141718] px-10 py-2 rounded-full text-base font-medium hover:bg-[#141718] hover:text-white transition flex items-center gap-2"
           >
             Show more
