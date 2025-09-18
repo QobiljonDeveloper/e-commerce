@@ -11,7 +11,7 @@ const ShopView = () => {
   const [categories, setCategories] = useState<string[]>([]);
   const [products, setProducts] = useState<any[]>([]);
   const [skip, setSkip] = useState(0);
-  const limit = 4;
+  const limit = 12;
 
   const { data, error, loading } = useFetch("/products", { limit: 100 });
 
