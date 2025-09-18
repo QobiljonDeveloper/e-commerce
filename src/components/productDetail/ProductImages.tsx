@@ -85,11 +85,11 @@ const ProductImages: React.FC<ProductImagesProps> = ({ currentImage, setCurrentI
         />
       </div>
 
-      <div className="flex gap-3 mt-4">
-        {data.products.slice(0, 6).map((item, index) => (
+      <div className="flex gap-3 mt-4 overflow-x-auto pb-2 no-scrollbar ">
+        {data.products.slice(0, 30).map((item, index) => (
           <div
             key={item.id}
-            className={`w-20 h-20 rounded-lg overflow-hidden border-2 cursor-pointer transition-all duration-200 ${
+            className={`w-20 h-20 rounded-lg overflow-hidden border-2 flex-shrink-0 cursor-pointer transition-all duration-200 ${
               currentImage === index
                 ? "border-black"
                 : "border-gray-200 hover:border-gray-400"
