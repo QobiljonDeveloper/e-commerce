@@ -5,64 +5,42 @@ import logo from "../../../assets/logo.svg";
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
 
+  // DRY uslubda nav linklar
+  const navLinks = [
+    { to: "/", label: "Home" },
+    { to: "/shop", label: "Shop" },
+    { to: "/product", label: "Product" },
+    { to: "/contact-us", label: "Contact Us" },
+  ];
+
   return (
     <section className="h-auto md:h-[60px]">
       <div className="container mx-auto h-full ">
         <div className="h-full flex flex-row justify-between items-center py-2 md:py-0">
+          {/* Logo */}
           <Link to={"/"}>
             <img src={logo} alt="Logo" className="w-[100px] md:w-auto" />
           </Link>
+
+          {/* Desktop nav */}
           <ul className="hidden md:flex gap-6 text-[#6C7275] text-sm md:text-base">
-            <li>
-              <NavLink
-                to="/"
-                className={({ isActive }) =>
-                  isActive
-                    ? "font-semibold text-black underline"
-                    : "hover:underline"
-                }
-              >
-                Home
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/shop"
-                className={({ isActive }) =>
-                  isActive
-                    ? "font-semibold text-black underline"
-                    : "hover:underline"
-                }
-              >
-                Shop
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/product"
-                className={({ isActive }) =>
-                  isActive
-                    ? "font-semibold text-black underline"
-                    : "hover:underline"
-                }
-              >
-                Product
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/contact-us"
-                className={({ isActive }) =>
-                  isActive
-                    ? "font-semibold text-black underline"
-                    : "hover:underline"
-                }
-              >
-                Contact Us
-              </NavLink>
-            </li>
+            {navLinks.map((link) => (
+              <li key={link.to}>
+                <NavLink
+                  to={link.to}
+                  className={({ isActive }) =>
+                    isActive
+                      ? "font-semibold text-black underline"
+                      : "hover:underline"
+                  }
+                >
+                  {link.label}
+                </NavLink>
+              </li>
+            ))}
           </ul>
 
+          {/* Desktop icons */}
           <div className="hidden md:flex items-center gap-3">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -119,6 +97,7 @@ const Header = () => {
             </div>
           </div>
 
+          {/* Mobile toggle button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="md:hidden"
@@ -160,36 +139,20 @@ const Header = () => {
             )}
           </button>
         </div>
+
+        {/* Mobile nav */}
         {isOpen && (
           <div className="md:hidden flex flex-col gap-4 mt-4 text-sm text-[#6C7275]">
-            <NavLink
-              to="/home"
-              className="hover:underline"
-              onClick={() => setIsOpen(false)}
-            >
-              Home
-            </NavLink>
-            <NavLink
-              to="/shop"
-              className="hover:underline"
-              onClick={() => setIsOpen(false)}
-            >
-              Shop
-            </NavLink>
-            <NavLink
-              to="/product"
-              className="hover:underline"
-              onClick={() => setIsOpen(false)}
-            >
-              Product
-            </NavLink>
-            <NavLink
-              to="/contact"
-              className="hover:underline"
-              onClick={() => setIsOpen(false)}
-            >
-              Contact Us
-            </NavLink>
+            {navLinks.map((link) => (
+              <NavLink
+                key={link.to}
+                to={link.to}
+                className="hover:underline"
+                onClick={() => setIsOpen(false)}
+              >
+                {link.label}
+              </NavLink>
+            ))}
             <div className="flex gap-4 mt-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
