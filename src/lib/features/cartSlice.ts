@@ -1,16 +1,29 @@
+
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { IProduct } from "../../types";
 
-export type ICartProduct = {
+export type ICartProduct = IProduct & {
   quantity: number;
-} & IProduct;
+};
 
 interface ICart {
   value: ICartProduct[];
 }
 
+const loadFromStorage = (): ICartProduct[] => {
+  try {
+    return JSON.parse(localStorage.getItem("cart") || "[]") || [];
+  } catch {
+    return [];
+  }
+};
+
+const saveToStorage = (cart: ICartProduct[]) => {
+  localStorage.setItem("cart", JSON.stringify(cart));
+};
+
 const initialState: ICart = {
-  value: JSON.parse(localStorage.getItem("cart") || '[]') || [],
+  value: loadFromStorage(),
 };
 
 export const cartSlice = createSlice({
@@ -18,47 +31,62 @@ export const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart: (state, action: PayloadAction<IProduct>) => {
-      const index = state.value.findIndex(
+      const existing = state.value.find(
         (item) => item.id === action.payload.id
       );
-      if (index < 0) {
+      if (existing) {
+        existing.quantity += 1;
+      } else {
         state.value.push({ ...action.payload, quantity: 1 });
       }
-      localStorage.setItem("cart", JSON.stringify(state.value));
+      saveToStorage(state.value);
     },
-    removeFromCart: (state, action: PayloadAction<IProduct>) => {
+
+    removeFromCart: (state, action: PayloadAction<ICartProduct>) => {
       state.value = state.value.filter((item) => item.id !== action.payload.id);
-      localStorage.setItem("cart", JSON.stringify(state.value));
+      saveToStorage(state.value);
     },
-    increaseAmount: (state, action: PayloadAction<IProduct>) => {
-      const index = state.value.findIndex(
-        (item) => item.id === action.payload.id
-      );
-      state.value = state.value.map((item: ICartProduct, inx: number) => {
-        if (index === inx) {
-          return { ...item, quantity: item.quantity + 1 };
+
+    increaseAmount: (state, action: PayloadAction<ICartProduct>) => {
+      const item = state.value.find((i) => i.id === action.payload.id);
+      if (item) {
+        item.quantity += 1;
+        saveToStorage(state.value);
+      }
+    },
+
+    decreaseAmount: (state, action: PayloadAction<ICartProduct>) => {
+      const item = state.value.find((i) => i.id === action.payload.id);
+      if (item) {
+        if (item.quantity > 1) {
+          item.quantity -= 1;
         } else {
-          return item;
+          state.value = state.value.filter((i) => i.id !== action.payload.id);
         }
-      });
-      localStorage.setItem("cart", JSON.stringify(state.value));
+        saveToStorage(state.value);
+      }
     },
-    decreaseAmount: (state, action: PayloadAction<IProduct>) => {
-      const index = state.value.findIndex(
-        (item) => item.id === action.payload.id
-      );
-      state.value = state.value.map((item: ICartProduct, inx: number) => {
-        if (index === inx) {
-          return { ...item, quantity: item.quantity - 1 };
+
+    setQuantity: (
+      state,
+      action: PayloadAction<{ product: IProduct; quantity: number }>
+    ) => {
+      const item = state.value.find((i) => i.id === action.payload.product.id);
+      if (item) {
+        if (action.payload.quantity > 0) {
+          item.quantity = action.payload.quantity;
         } else {
-          return item;
+          state.value = state.value.filter(
+            (i) => i.id !== action.payload.product.id
+          );
         }
-      });
-      localStorage.setItem("cart", JSON.stringify(state.value));
+        saveToStorage(state.value);
+      }
     },
+
     clearCart: (state) => {
       state.value = [];
-      localStorage.setItem("cart", JSON.stringify(state.value));
+      saveToStorage(state.value);
     },
   },
 });
@@ -69,5 +97,10 @@ export const {
   decreaseAmount,
   increaseAmount,
   removeFromCart,
+  setQuantity,
 } = cartSlice.actions;
+
 export default cartSlice.reducer;
+
+
+

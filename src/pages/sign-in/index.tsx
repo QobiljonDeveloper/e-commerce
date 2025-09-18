@@ -3,7 +3,7 @@ import { api } from "../../api";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { setToken } from "../../lib/features/authSlice";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import loginImg from "../../assets/login.png";
 import logo from "../../assets/logo.svg";
 import { LuEye, LuEyeOff } from "react-icons/lu";
@@ -19,7 +19,7 @@ const SignIn = () => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-    const body = { username, password, expiresInMins: 1 };
+    const body = { username, password, expiresInMins: 60 };
     api
       .post("/auth/login", body)
       .then((res) => {
@@ -34,7 +34,7 @@ const SignIn = () => {
   };
 
   return (
-    <div className="flex flex-col lg:flex-row items-center gap-10 min-h-screen">
+    <div className="  flex flex-col lg:flex-row items-center gap-10 min-h-screen">
       <div
         className="w-full lg:w-1/2 h-[430px] lg:h-screen relative flex items-start"
         style={{
@@ -43,7 +43,9 @@ const SignIn = () => {
           backgroundPosition: "center",
         }}
       >
-        <img src={logo} alt="Logo" className="mx-auto mt-4 lg:mt-8" />
+        <Link to={"/"} className="mx-auto mt-4 lg:mt-8">
+          <img src={logo} alt="Logo" className="" />
+        </Link>
       </div>
 
       <form

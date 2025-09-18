@@ -1,4 +1,5 @@
 
+
 export interface IProduct {
   id: number;
   title: string;
@@ -109,4 +110,11 @@ export interface IUser {
   };
   role: string;
 }
+
+
+
+export type ICartProduct = {
+  quantity: number;
+} & IProduct;
+
 

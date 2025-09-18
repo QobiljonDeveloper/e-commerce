@@ -21,3 +21,4 @@ export const useFetch = (entpoint: string, params?: IParams) => {
 
   return { data, error, loading };
 };
+
