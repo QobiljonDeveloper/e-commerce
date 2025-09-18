@@ -4,7 +4,6 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../../lib";
 import { toggleLike } from "../../lib/features/wishlistSlice";
-import { addToCart } from "../../lib/features/cartSlice";
 
 interface IProduct {
   id: number;

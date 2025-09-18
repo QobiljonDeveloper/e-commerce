@@ -1,13 +1,10 @@
-import { memo } from 'react';
-import { useFetch } from '../../hooks/useFetch';
-import ProductView from '../../components/product-view/ProductView';
+import { memo } from "react";
+import ShopView from "../../components/shop-view";
 
 const Shop = () => {
-   const {data} = useFetch("/products", {limit: 12})
   return (
-    <div className="container">
-      <h2>Shop</h2>
-       <ProductView data={data?.products}/> 
+    <div className="">
+      <ShopView />
     </div>
   );
 };
