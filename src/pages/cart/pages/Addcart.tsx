@@ -77,11 +77,11 @@ const AddCart = () => {
 
   return (
     <div className="container">
-      <div className="py-20 flex justify-between gap-16">
-        <div className="w-[643px] h-[482px] overflow-y-auto overflow-x-hidden  rounded">
+      <div className="py-20 flex flex-col lg:flex-row justify-between gap-10 lg:gap-16">
+        <div className="w-full lg:w-[643px] h-[482px] overflow-y-auto overflow-x-hidden rounded">
           <div className="min-h-[50px] border-b border-[#6C7275] flex justify-between px-4">
             <p className="font-medium text-[#121212]">Product</p>
-            <div className="font-medium flex gap-[74px] text-[#121212]">
+            <div className="font-medium hidden sm:flex gap-6 md:gap-[74px] text-[#121212]">
               <p>Quantity</p>
               <p>Price</p>
               <p>Subtotal</p>
@@ -92,9 +92,9 @@ const AddCart = () => {
             {cart.map((item) => (
               <div
                 key={item.id}
-                className="flex justify-between items-center h-[144px] border-b border-[#E8ECEF] px-4"
+                className="flex flex-col sm:flex-row sm:justify-between sm:items-center py-4 sm:h-[144px] border-b border-[#E8ECEF] px-4 gap-4"
               >
-                <div className="flex gap-4 items-center ">
+                <div className="flex gap-4 items-center">
                   <img
                     src={item.thumbnail}
                     className="w-20 h-24 object-cover rounded"
@@ -116,8 +116,8 @@ const AddCart = () => {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-[74px]">
-                  <div className="flex items-center border rounded">
+                <div className="flex sm:flex-row flex-col sm:items-center sm:gap-[74px] gap-3">
+                  <div className="flex items-center border rounded w-fit">
                     <button
                       className="px-2 text-lg"
                       onClick={() =>
@@ -137,8 +137,8 @@ const AddCart = () => {
                     </button>
                   </div>
 
-                  <p className="w-16 text-center">${item.price}</p>
-                  <p className="w-20 text-center font-semibold">
+                  <p className="text-center">${item.price}</p>
+                  <p className="text-center font-semibold">
                     ${(item.price * item.quantity).toFixed(2)}
                   </p>
                 </div>
@@ -147,7 +147,7 @@ const AddCart = () => {
           </div>
         </div>
 
-        <div className=" w-[413px] border border-[#6C7275] rounded-[6px] p-6 flex flex-col">
+        <div className="w-full lg:w-[413px] border border-[#6C7275] rounded-[6px] p-6 flex flex-col">
           <p className="font-medium text-[20px] text-[#141718] mb-4">
             Cart summary
           </p>
@@ -225,10 +225,9 @@ const AddCart = () => {
         </div>
       </div>
 
-      {/* Coupon form */}
       <form
         onSubmit={handleApply}
-        className="h-auto w-[424px] p-5 flex flex-col gap-3 mt-10"
+        className="h-auto w-full sm:w-[424px] p-5 flex flex-col gap-3 mt-10"
       >
         <p className="font-medium text-[20px] text-[#141718]">Have a coupon?</p>
         <p className="text-[#6C7275] text-sm">

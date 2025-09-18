@@ -28,7 +28,6 @@ const Cart = () => {
 
           const isCompleted = i < currentIndex;
           const isActive = i === currentIndex; 
-          // const isUpcoming = i > currentIndex; 
 
           return (
             <div
