@@ -69,6 +69,7 @@ const ProductGrid = ({ data, loading, error, limit = 4 }: ProductGridProps) => {
         return (
           <Link
             to={`/products/${item.id}`}
+            state={{ product: item }} // 🔥 productni state orqali yuboramiz
             key={item.id}
             className="group w-full sm:w-[262px] h-[433px] transition overflow-hidden flex flex-col gap-3"
           >
