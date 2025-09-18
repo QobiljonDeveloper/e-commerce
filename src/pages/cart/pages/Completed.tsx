@@ -24,24 +24,26 @@ const Completed = () => {
   });
 
   return (
-    <div className="mx-auto shadow-lg w-[738px] h-[730px] py-20 px-24 flex items-center flex-col">
-      <h2 className="text-[28px] font-medium text-[#6C7275]">Thank you! 🎉</h2>
-      <h4 className="text-[#23262F] font-medium text-[40px] mb-8">
+    <div className="mx-auto shadow-lg w-full max-w-[738px] min-h-[600px] py-10 sm:py-16 px-6 sm:px-12 lg:px-24 flex items-center flex-col text-center rounded-lg">
+      <h2 className="text-[22px] sm:text-[28px] font-medium text-[#6C7275]">
+        Thank you! 🎉
+      </h2>
+      <h4 className="text-[#23262F] font-medium text-[28px] sm:text-[40px] mb-8">
         Your order has been received
       </h4>
 
-      <div className="flex gap-10 mb-10">
+      <div className="flex flex-wrap justify-center gap-6 mb-10">
         {cart?.map((item) => (
           <div
             key={item.id}
-            className="relative w-20 h-20 bg-[#F3F5F7] flex items-center justify-center rounded-lg"
+            className="relative w-16 h-16 sm:w-20 sm:h-20 bg-[#F3F5F7] flex items-center justify-center rounded-lg"
           >
             <img
               src={item.thumbnail}
               alt={item.title}
-              className="w-20 h-20 object-contain"
+              className="w-full h-full object-contain"
             />
-            <span className="absolute top-[-4px] right-[-4px] bg-black text-white text-xs px-2 py-0.5 rounded-full">
+            <span className="absolute top-[-6px] right-[-6px] bg-black text-white text-xs px-1.5 py-0.5 rounded-full">
               {item.quantity}
             </span>
           </div>
@@ -49,7 +51,7 @@ const Completed = () => {
       </div>
 
       <div className="flex justify-center w-full mt-6">
-        <div className="space-y-2 text-lg text-[#23262F] text-left">
+        <div className="space-y-2 text-base sm:text-lg text-[#23262F] text-left">
           <p>
             <span className="font-medium">Order code:</span> {orderId}
           </p>
@@ -68,7 +70,7 @@ const Completed = () => {
 
       <Link
         to="/purchase-history"
-        className="mt-8 px-10 py-3 bg-black rounded-full text-white hover:underline"
+        className="mt-10 px-6 sm:px-10 py-3 bg-black rounded-full text-white hover:bg-gray-800 transition"
       >
         Purchase history
       </Link>

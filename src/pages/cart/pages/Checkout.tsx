@@ -78,9 +78,9 @@ const Checkout = () => {
       } = $${item.price * item.quantity}\n`;
     });
 
-    text += `\n💵 Subtotal: $${subtotal}\n🎟️ Chegirma: -$${discount}\n🚚 Yetkazib berish: ${
+    text += `\n💵 Subtotal: $${subtotal.toFixed(2)}\n🎟️ Chegirma: -$${discount}\n🚚 Yetkazib berish: ${
       selected === "free" ? "Bepul" : "$15"
-    }\n✅ Umumiy: $${total}`;
+    }\n✅ Umumiy: $${total.toFixed(2)}`;
 
     try {
       await axios.post(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
@@ -104,9 +104,9 @@ const Checkout = () => {
   };
 
   return (
-    <div className="container py-20 flex justify-between gap-8">
+    <div className="container py-20 flex flex-col lg:flex-row justify-between gap-8">
       <form
-        className="w-[643px] flex flex-col gap-8"
+        className="w-full lg:w-[643px] flex flex-col gap-8"
         onSubmit={(e) => {
           e.preventDefault();
           handlePlaceOrder();
@@ -114,7 +114,7 @@ const Checkout = () => {
       >
         <div className="border rounded-lg p-6 space-y-4">
           <h3 className="font-medium text-[20px]">Contact Information</h3>
-          <div className="flex gap-4">
+          <div className="flex flex-col sm:flex-row gap-4">
             <div className="flex-1">
               <label className="block text-sm mb-1">First Name</label>
               <input
@@ -193,7 +193,7 @@ const Checkout = () => {
               className="w-full border rounded-md p-2"
             />
           </div>
-          <div className="flex gap-4">
+          <div className="flex flex-col sm:flex-row gap-4">
             <div className="flex-1">
               <label className="block text-sm mb-1">State</label>
               <input
@@ -251,7 +251,7 @@ const Checkout = () => {
               className="w-full border rounded-md p-2"
             />
           </div>
-          <div className="flex gap-4">
+          <div className="flex flex-col sm:flex-row gap-4">
             <div className="flex-1">
               <label className="block text-sm mb-1">Expiration Date</label>
               <input
@@ -283,16 +283,16 @@ const Checkout = () => {
         </button>
       </form>
 
-      <div className="border rounded-lg px-6 py-4 w-[413px] ">
+      <div className="border rounded-lg px-6 py-4 w-full lg:w-[413px]">
         <h3 className="font-medium text-3xl text-[#121212] mb-4">
           Order summary
         </h3>
 
-        <div className="space-y-6 max-h-[456px] overflow-y-auto p-">
+        <div className="max-h-[456px] overflow-y-auto">
           {cart.map((item) => (
             <div
               key={item.id}
-              className="flex justify-between items-center border-b border-b-[#E8ECEF]  py-6"
+              className="flex flex-col sm:flex-row justify-between sm:items-center border-b border-b-[#E8ECEF] py-4 sm:py-6 gap-4"
             >
               <div className="flex items-center gap-3">
                 <img
@@ -301,8 +301,12 @@ const Checkout = () => {
                   className="w-14 h-14 rounded object-cover"
                 />
                 <div>
-                  <p className="font-medium">{item.title}</p>
-                  <p className="text-sm text-gray-500">{item.category}</p>
+                  <p className="font-medium text-sm sm:text-base">
+                    {item.title}
+                  </p>
+                  <p className="text-xs sm:text-sm text-gray-500">
+                    {item.category}
+                  </p>
                   <div className="flex items-center gap-2 mt-1">
                     <button
                       type="button"
@@ -322,7 +326,7 @@ const Checkout = () => {
                   </div>
                 </div>
               </div>
-              <div className="flex flex-col items-end">
+              <div className="flex flex-col items-start sm:items-end">
                 <p>${item.price * item.quantity}</p>
                 <button
                   type="button"
@@ -336,7 +340,7 @@ const Checkout = () => {
           ))}
         </div>
 
-        <div className="flex gap-2 items-center mb-4">
+        <div className="flex flex-col sm:flex-row gap-2 items-stretch sm:items-center mb-4 mt-4">
           <input
             type="text"
             placeholder="Discount code"
@@ -347,7 +351,7 @@ const Checkout = () => {
           </button>
         </div>
 
-        <div className="mt-6 p-6 bg-white rounded-2xl shadow-sm border border-[#E8ECEF] space-y-4">
+        <div className="mt-6 p-6 bg-white rounded-2xl shadow-sm border border-[#E8ECEF]">
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-2">
               <RiCoupon4Line className="text-[#6C7275]" size={20} />
