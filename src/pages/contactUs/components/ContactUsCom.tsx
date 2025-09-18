@@ -15,10 +15,10 @@ const ContactUsCom = () => {
   const handleSend = (e: FormEvent) => {
     e.preventDefault();
 
-    let text = "Contact info \n\n";
-    text += `<b>FullName</b>: ${fullName} \n`;
-    text += `<b>Email</b>: ${email} \n`;
-    text += `<b>Message</b>: ${message} \n`;
+    let text = "Contact info %0A%0A";
+    text += `<b>FullName</b>: ${fullName} %0A`;
+    text += `<b>Email</b>: ${email} %0A`;
+    text += `<b>Message</b>: ${message} %0A`;
     axios.get(
       ` https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${GROUP_TOKEN}&text=${text}&parse_mode=html`
     );
