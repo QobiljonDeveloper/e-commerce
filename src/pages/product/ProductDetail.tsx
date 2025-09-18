@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React, {  useState } from "react";
 import ProductInfo from "../../components/productDetail/ProductInfo";
 import ProductReviews from "../../components/productDetail/ProductReview";
 import ProductImages from "../../components/productDetail/ProductImages";
 
 const ProductDetail: React.FC = () => {
   const [currentImage, setCurrentImage] = useState<number>(0);
+
+
+  
+
 
   return (
     <div className="min-h-screen bg-white">

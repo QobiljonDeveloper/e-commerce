@@ -46,3 +46,13 @@
   right: auto !important;
   width: auto !important;
 }
+
+/* Scroll uchun */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;  
+  scrollbar-width: none;     
+}
