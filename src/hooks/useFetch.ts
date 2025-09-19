@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { api } from "../api";
 
-export interface IParams {
-  limit?: number;
+interface IParams {
+  limit: number;
   skip?: number;
   order?: string;
   category?: string;
@@ -10,15 +10,17 @@ export interface IParams {
   maxPrice?: number;
 }
 
-export const useFetch = <T,>(endpoint: string) => {
-  const [data, setData] = useState<T | null>(null);
+export const useFetch = (endpoint: string, params?: IParams) => {
+  const [data, setData] = useState<any>(null);
   const [error, setError] = useState<Error | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const fetchData = async (params?: IParams) => {
+  const fetchData = async (overrideParams?: IParams) => {
     setLoading(true);
     try {
-      const res = await api.get<T>(endpoint, { params });
+      const res = await api.get(endpoint, {
+        params: { ...params, ...overrideParams },
+      });
       setData(res.data);
     } catch (err: any) {
       setError(err);
