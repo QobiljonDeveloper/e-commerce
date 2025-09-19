@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Atom } from "react-loading-indicators";
+import { useParams } from "react-router-dom";
 
 interface Iproduct {
   id: number;
@@ -12,29 +13,29 @@ interface Iproduct {
   category: string;
 }
 
-interface IResponse {
-  limit: number;
-  products: Iproduct[];
-  skip: number;
-  total: number;
-}
 
 interface ProductImagesProps {
-  currentImage: number;
-  setCurrentImage: (index: number) => void;
+  currentImage?: number;
+  setCurrentImage?: (index: number) => void;
 }
 
-const ProductImages: React.FC<ProductImagesProps> = ({ currentImage, setCurrentImage }) => {
-  const [data, setData] = useState<IResponse | null>(null);
+const ProductImages: React.FC<ProductImagesProps> = () => {
+  const [product, setProduct] = useState<Iproduct | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const [currentImage, setCurrentImage] = useState<number>(0);
+  const { id } = useParams();
   useEffect(() => {
-    axios
-      .get("https://dummyjson.com/products")
-      .then((res) => setData(res.data))
-      .catch((err) => setError(err.message))
-      .finally(() => setLoading(false));
-  }, []);
+    if (id) {
+      axios
+        .get(`https://dummyjson.com/products/${id}`)
+        .then((res) => setProduct(res.data))
+        .catch((err) => {
+          setError(err.message);
+        })
+        .finally(() => setLoading(false));
+    }
+  }, [id]);
 
   if (loading)
     return (
@@ -44,9 +45,7 @@ const ProductImages: React.FC<ProductImagesProps> = ({ currentImage, setCurrentI
     );
 
   if (error) return <p className="text-red-500">Error: {error}</p>;
-  if (!data) return null;
-
-  const product = data.products[currentImage];
+  if (!product) return null;
 
   return (
     <div className="flex flex-col">
@@ -61,7 +60,7 @@ const ProductImages: React.FC<ProductImagesProps> = ({ currentImage, setCurrentI
         </div>
 
         <button
-          onClick={() => setCurrentImage((currentImage - 1 + data.products.length) % data.products.length)}
+          onClick={() => setCurrentImage((currentImage - 1 + product.images.length) % product.images.length)}
           className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10"
         >
           <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -70,7 +69,7 @@ const ProductImages: React.FC<ProductImagesProps> = ({ currentImage, setCurrentI
         </button>
 
         <button
-          onClick={() => setCurrentImage((currentImage + 1) % data.products.length)}
+          onClick={() => setCurrentImage((currentImage + 1) % product.images.length)}
           className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10"
         >
           <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -79,17 +78,17 @@ const ProductImages: React.FC<ProductImagesProps> = ({ currentImage, setCurrentI
         </button>
 
         <img
-          src={product.images[0]}
+          src={product.images[currentImage]}
           alt="Product main"
           className="w-full h-[480px] md:h-[520px] object-cover rounded-lg"
         />
       </div>
 
-      <div className="flex gap-3 mt-4 overflow-x-auto pb-2 no-scrollbar ">
-        {data.products.slice(0, 30).map((item, index) => (
+      <div className="flex gap-3 mt-4">
+        {product.images.map((image, index) => (
           <div
-            key={item.id}
-            className={`w-20 h-20 rounded-lg overflow-hidden border-2 flex-shrink-0 cursor-pointer transition-all duration-200 ${
+            key={index}
+            className={`w-20 h-20 rounded-lg overflow-hidden border-2 cursor-pointer transition-all duration-200 ${
               currentImage === index
                 ? "border-black"
                 : "border-gray-200 hover:border-gray-400"
@@ -97,7 +96,7 @@ const ProductImages: React.FC<ProductImagesProps> = ({ currentImage, setCurrentI
             onClick={() => setCurrentImage(index)}
           >
             <img
-              src={item.images[0]}
+              src={image}
               alt={`thumb ${index + 1}`}
               className="w-full h-full object-cover"
             />
@@ -109,4 +108,3 @@ const ProductImages: React.FC<ProductImagesProps> = ({ currentImage, setCurrentI
 };
 
 export default ProductImages;
-

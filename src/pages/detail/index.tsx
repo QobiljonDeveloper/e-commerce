@@ -1,13 +1,11 @@
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Outlet, NavLink } from "react-router-dom";
 import ProductImages from "../../components/productDetail/ProductImages";
 import ProductInfo from "../../components/productDetail/ProductInfo";
 
 
 const Detail: React.FC = () => {
-  const [currentImage, setCurrentImage] = useState(0);
-
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -16,11 +14,8 @@ const Detail: React.FC = () => {
     <div className="container mx-auto py-10">
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-        <ProductImages
-          currentImage={currentImage}
-          setCurrentImage={setCurrentImage}
-        />
-        <ProductInfo currentImage={currentImage} />
+        <ProductImages />
+        <ProductInfo />
       </div>
 
       <div className="mt-12">
