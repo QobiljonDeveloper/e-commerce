@@ -6,7 +6,7 @@ const ContactHero = () => {
     <section className="container mx-auto px-4 sm:px-6 lg:px-8">
       <div className="max-w-[720px] text-center md:text-left">
         <h2 className="text-2xl sm:text-3xl md:text-[54px] font-semibold leading-snug">
-          We believe in sustainable decor. We’re passionate about life at home.
+          We believe in sustainable decor. Were passionate about life at home.
         </h2>
         <p className="mt-4 text-sm sm:text-base md:text-[16px] text-gray-700">
           Our features timeless furniture, with natural fabrics, curved lines,
