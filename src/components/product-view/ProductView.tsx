@@ -2,9 +2,10 @@ import { memo } from "react";
 import Title from "../title";
 import { useFetch } from "../../hooks/useFetch";
 import ProductGrid from "../Product-grid";
+import type { IProductResponse } from "../../types";
 
 const ProductView = () => {
-  const { data, error, loading } = useFetch("/products", { limit: 4 });
+  const { data, error, loading } = useFetch<IProductResponse>("/products", { limit: 4 });
 
   return (
     <div className="container w-full py-12 px-8">
