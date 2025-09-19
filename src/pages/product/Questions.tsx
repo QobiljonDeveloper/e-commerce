@@ -3,7 +3,7 @@ const Questions = () => {
     "Does this product come with a warranty?",
     "Is the material safe for children?",
     "How long does the delivery take?",
-    "Can I return this if it doesn’t fit?",
+    "Can I return this if it doesnt fit?",
   ];
 
   return (

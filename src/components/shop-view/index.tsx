@@ -8,74 +8,67 @@ const ShopView = () => {
   const [minPrice, setMinPrice] = useState<number | undefined>(undefined);
   const [maxPrice, setMaxPrice] = useState<number | undefined>(undefined);
   const [order, setOrder] = useState("id-asc");
-  const [category, setCategory] = useState<string>("All");
+  const [category, setCategory] = useState("All");
   const [categories, setCategories] = useState<string[]>([]);
-  const [products, setProducts] = useState<IProduct[]>([]);
+  const [allProducts, setAllProducts] = useState<IProduct[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<IProduct[]>([]);
   const [skip, setSkip] = useState(0);
   const limit = 12;
 
   const { data, error, loading, refetch } = useFetch("/products");
+
   useEffect(() => {
-    refetch({ limit, skip: 0, order, category, minPrice, maxPrice });
+    refetch({ limit, skip: 0 });
   }, []);
 
   useEffect(() => {
     if (data?.products) {
       if (skip === 0) {
-        setProducts(data.products);
+        setAllProducts(data.products);
       } else {
-        setProducts((prev) => [...prev, ...data.products]);
+        setAllProducts((prev) => [...prev, ...data.products]);
       }
 
       if (categories.length === 0 && data.products.length > 0) {
         const uniqueCats = [
           "All",
-          ...new Set(data.products.map((p: any) => p.category)),
+          ...new Set(data.products.map((p: IProduct) => p.category)),
         ];
-        setCategories(uniqueCats as string[]);
+        setCategories(uniqueCats);
       }
     }
   }, [data]);
 
+  useEffect(() => {
+    let temp = [...allProducts];
+
+    if (category !== "All") {
+      temp = temp.filter((p) => p.category === category.toLowerCase());
+    }
+
+    if (minPrice !== undefined) {
+      temp = temp.filter((p) => p.price >= minPrice);
+    }
+
+    if (maxPrice !== undefined) {
+      temp = temp.filter((p) => p.price <= maxPrice);
+    }
+
+    if (order === "price-asc") {
+      temp.sort((a, b) => a.price - b.price);
+    } else if (order === "price-desc") {
+      temp.sort((a, b) => b.price - a.price);
+    } else {
+      temp.sort((a, b) => a.id - b.id); 
+    }
+
+    setFilteredProducts(temp);
+  }, [allProducts, category, minPrice, maxPrice, order]);
+
   const handleShowMore = () => {
     const newSkip = skip + limit;
     setSkip(newSkip);
-    refetch({ limit, skip: newSkip, order, category, minPrice, maxPrice });
-  };
-
-  const resetAndFetch = (updates: Partial<any>) => {
-    setSkip(0);
-    refetch({
-      limit,
-      skip: 0,
-      order,
-      category,
-      minPrice,
-      maxPrice,
-      ...updates,
-    });
-  };
-
-  const handleChangeOrder = (e: ChangeEvent<HTMLSelectElement>) => {
-    setOrder(e.target.value);
-    resetAndFetch({ order: e.target.value });
-  };
-
-  const handleCategoryChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    setCategory(e.target.value);
-    resetAndFetch({ category: e.target.value });
-  };
-
-  const handleMinPrice = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value ? Number(e.target.value) : undefined;
-    setMinPrice(value);
-    resetAndFetch({ minPrice: value });
-  };
-
-  const handleMaxPrice = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value ? Number(e.target.value) : undefined;
-    setMaxPrice(value);
-    resetAndFetch({ maxPrice: value });
+    refetch({ limit, skip: newSkip });
   };
 
   return (
@@ -86,7 +79,9 @@ const ShopView = () => {
           <input
             type="number"
             placeholder="Min price"
-            onChange={handleMinPrice}
+            onChange={(e) =>
+              setMinPrice(e.target.value ? Number(e.target.value) : undefined)
+            }
             className="h-12 border-2 rounded-lg border-[#6C7275] pl-9 pr-4 text-sm w-32"
           />
         </div>
@@ -96,7 +91,9 @@ const ShopView = () => {
           <input
             type="number"
             placeholder="Max price"
-            onChange={handleMaxPrice}
+            onChange={(e) =>
+              setMaxPrice(e.target.value ? Number(e.target.value) : undefined)
+            }
             className="h-12 border-2 rounded-lg border-[#6C7275] pl-9 pr-4 text-sm w-32"
           />
         </div>
@@ -104,7 +101,7 @@ const ShopView = () => {
         <div className="relative">
           <Tag className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 w-4 h-4" />
           <select
-            onChange={handleCategoryChange}
+            onChange={(e) => setCategory(e.target.value)}
             value={category}
             className="h-12 border-2 rounded-lg border-[#6C7275] pl-9 pr-4 text-sm"
           >
@@ -119,7 +116,7 @@ const ShopView = () => {
         <div className="relative">
           <ArrowUpDown className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 w-4 h-4" />
           <select
-            onChange={handleChangeOrder}
+            onChange={(e) => setOrder(e.target.value)}
             value={order}
             className="h-12 border-2 rounded-lg border-[#6C7275] pl-9 pr-4 text-sm"
           >
@@ -130,7 +127,7 @@ const ShopView = () => {
         </div>
       </div>
 
-      <ProductGrid data={products} error={error} loading={loading} />
+      <ProductGrid data={filteredProducts} error={error} loading={loading} />
 
       <div className="flex justify-center">
         {data?.products?.length === limit && (

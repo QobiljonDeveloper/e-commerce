@@ -54,7 +54,7 @@ const SignIn = () => {
       >
         <h2 className="text-2xl font-bold mb-4">Sign In</h2>
         <p className="mb-6 text-gray-500">
-          Don’t have an account yet?{" "}
+          Dont have an account yet?{" "}
           <span className="text-green-600 cursor-pointer">Sign Up</span>
         </p>
 
