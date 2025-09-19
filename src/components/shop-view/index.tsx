@@ -2,24 +2,26 @@ import { memo, useEffect, useState, type ChangeEvent } from "react";
 import { useFetch } from "../../hooks/useFetch";
 import ProductGrid from "../Product-grid";
 import { DollarSign, Tag, ArrowUpDown } from "lucide-react";
-import type { IProduct } from "../../types";
+import type { IProduct, IProductResponse } from "../../types";
 
 const ShopView = () => {
   const [minPrice, setMinPrice] = useState<number | undefined>(undefined);
   const [maxPrice, setMaxPrice] = useState<number | undefined>(undefined);
   const [order, setOrder] = useState("id-asc");
   const [category, setCategory] = useState("All");
-  const [categories, setCategories] = useState<string[]>([]);
+
   const [allProducts, setAllProducts] = useState<IProduct[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<IProduct[]>([]);
-  const [skip, setSkip] = useState(0);
-  const limit = 12;
+  const [categories, setCategories] = useState<string[]>([]);
 
-  const { data, error, loading, refetch } = useFetch("/products");
+  const [skip, setSkip] = useState(0);
+  const limit = 4;
+
+  const { data, error, loading, refetch } = useFetch<IProductResponse>("/products");
 
   useEffect(() => {
-    refetch({ limit, skip: 0 });
-  }, []);
+    refetch({ limit, skip });
+  }, [skip]);
 
   useEffect(() => {
     if (data?.products) {
@@ -32,7 +34,7 @@ const ShopView = () => {
       if (categories.length === 0 && data.products.length > 0) {
         const uniqueCats = [
           "All",
-          ...new Set(data.products.map((p: IProduct) => p.category)),
+          ...new Set(data.products.map((p) => String(p.category))),
         ];
         setCategories(uniqueCats);
       }
@@ -43,7 +45,7 @@ const ShopView = () => {
     let temp = [...allProducts];
 
     if (category !== "All") {
-      temp = temp.filter((p) => p.category === category.toLowerCase());
+      temp = temp.filter((p) => p.category.toLowerCase() === category.toLowerCase());
     }
 
     if (minPrice !== undefined) {
@@ -59,21 +61,21 @@ const ShopView = () => {
     } else if (order === "price-desc") {
       temp.sort((a, b) => b.price - a.price);
     } else {
-      temp.sort((a, b) => a.id - b.id); 
+      temp.sort((a, b) => a.id - b.id);
     }
 
     setFilteredProducts(temp);
   }, [allProducts, category, minPrice, maxPrice, order]);
 
   const handleShowMore = () => {
-    const newSkip = skip + limit;
-    setSkip(newSkip);
-    refetch({ limit, skip: newSkip });
+    setSkip((prev) => prev + limit);
   };
 
   return (
     <div className="container w-full py-12 flex flex-col gap-10">
+  
       <div className="flex gap-4 items-center flex-wrap">
+    
         <div className="relative">
           <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 w-4 h-4" />
           <input
@@ -86,6 +88,7 @@ const ShopView = () => {
           />
         </div>
 
+    
         <div className="relative">
           <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 w-4 h-4" />
           <input
@@ -98,10 +101,11 @@ const ShopView = () => {
           />
         </div>
 
+    
         <div className="relative">
           <Tag className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 w-4 h-4" />
           <select
-            onChange={(e) => setCategory(e.target.value)}
+            onChange={(e: ChangeEvent<HTMLSelectElement>) => setCategory(e.target.value)}
             value={category}
             className="h-12 border-2 rounded-lg border-[#6C7275] pl-9 pr-4 text-sm"
           >
@@ -113,10 +117,11 @@ const ShopView = () => {
           </select>
         </div>
 
+    
         <div className="relative">
           <ArrowUpDown className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 w-4 h-4" />
           <select
-            onChange={(e) => setOrder(e.target.value)}
+            onChange={(e: ChangeEvent<HTMLSelectElement>) => setOrder(e.target.value)}
             value={order}
             className="h-12 border-2 rounded-lg border-[#6C7275] pl-9 pr-4 text-sm"
           >
@@ -127,8 +132,10 @@ const ShopView = () => {
         </div>
       </div>
 
+  
       <ProductGrid data={filteredProducts} error={error} loading={loading} />
 
+  
       <div className="flex justify-center">
         {data?.products?.length === limit && (
           <button

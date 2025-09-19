@@ -17,16 +17,11 @@ export const useFetch = <T,>(endpoint: string) => {
 
   const fetchData = async (params?: IParams) => {
     setLoading(true);
-    setError(null);
     try {
       const res = await api.get<T>(endpoint, { params });
       setData(res.data);
-    } catch (err) {
-      if (err instanceof Error) {
-        setError(err);
-      } else {
-        setError(new Error("Nomalum xato"));
-      }
+    } catch (err: any) {
+      setError(err);
     } finally {
       setLoading(false);
     }
